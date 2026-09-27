@@ -11,12 +11,12 @@
 
 | Member Avatar | Member Name | Role & Responsibility | GitHub Profile |
 | :---: | :--- | :--- | :--- |
-| 👑 | **Ankit** | **Team Lead** & Full-Stack AI Architect | [@ankit099776-bit](https://github.com/ankit099776-bit) |
-| 👨‍💻 | **Team Member 2** | Frontend & Ol Chiki UI Specialist | [@team_member_2](https://github.com/ankit099776-bit/VernaCode_133) |
-| 👩‍💻 | **Team Member 3** | Backend & Voice WebSockets Engineer | [@team_member_3](https://github.com/ankit099776-bit/VernaCode_133) |
-| 👨‍💻 | **Team Member 4** | Translation Corpus & Dataset Specialist | [@team_member_4](https://github.com/ankit099776-bit/VernaCode_133) |
-| 👩‍💻 | **Team Member 5** | Quality Assurance & Testing Lead | [@team_member_5](https://github.com/ankit099776-bit/VernaCode_133) |
-| 👨‍💻 | **Team Member 6** | Vernacular Curriculum & Pedagogy Lead | [@team_member_6](https://github.com/ankit099776-bit/VernaCode_133) |
+| 👑 | **Ankit Pandey** | **Team Lead** & Full-Stack AI Architect | [@ankit099776-bit](https://github.com/ankit099776-bit) |
+| 👨‍💻 | **Aditi Gupta** | Frontend & Ol Chiki UI Specialist | [@aaditigupta-create](https://github.com/aaditigupta-create) |
+| 👩‍💻 | **Abhinav Raghuvanshi** | Backend & Voice WebSockets Engineer | [@AbhinavRaghuvanshi77 ]((https://github.com/AbhinavRaghuvanshi77)) |
+| 👨‍💻 | **Alok Kumar Pandey** | Translation Corpus & Dataset Specialist | [@alokkumarpandey8088-alt](https://github.com/alokkumarpandey8088-alt) |
+| 👩‍💻 | **Ayush Yadav** | Quality Assurance & Testing Lead | [@Ayush-Yadav06](https://github.com/Ayush-Yadav06) |
+| 👨‍💻 | **Avinash Pandey** | Vernacular Curriculum & Pedagogy Lead | [@imavinashpandey-star]((https://github.com/imavinashpandey-star)) |
 
 ---
 
