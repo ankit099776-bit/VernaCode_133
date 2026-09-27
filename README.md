@@ -1,11 +1,31 @@
-# BhashaSetu AI — Real-Time Offline Hindi → Santali Classroom Voice Translator
+# BhashaSetu AI — Real-Time Offline & Online Hindi → Santali Classroom Voice Platform
+### 🏆 SIH 2026 Submission | Problem Statement ID: SIH26042 | Team: VernaCode_133
 
-[![Tests](https://img.shields.io/badge/pytest-41%20passed-brightgreen.svg)](tests/)
-[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](#environment-setup)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Offline](https://img.shields.io/badge/Offline-100%25%20Zero%20Internet-success.svg)](#critical-requirement--full-offline-operation)
+[![Live App](https://img.shields.io/badge/Render-Live%20Web%20App-success?style=for-the-badge&logo=render)](https://vernacode-133.onrender.com)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-VernaCode__133-blue?style=for-the-badge&logo=github)](https://github.com/ankit099776-bit/VernaCode_133)
+[![Tests](https://img.shields.io/badge/pytest-63%20passed-brightgreen.svg)](tests/)
 
-A high-performance, dual-mode (ONLINE & OFFLINE) classroom voice translation system for **Hindi Speech → Hindi Text → Santali Text (Ol Chiki) → Santali Audio (TTS)**, built for **SIH 2026 Problem Statement SIH26042** (BhashaSetu AI).
+---
+
+## 👥 Team VernaCode_133 — SIH 2026 Team Members & Contributors
+
+| Member Avatar | Member Name | Role & Responsibility | GitHub Profile |
+| :---: | :--- | :--- | :--- |
+| 👑 | **Ankit** | **Team Lead** & Full-Stack AI Architect | [@ankit099776-bit](https://github.com/ankit099776-bit) |
+| 👨‍💻 | **Team Member 2** | Frontend & Ol Chiki UI Specialist | [@team_member_2](https://github.com/ankit099776-bit/VernaCode_133) |
+| 👩‍💻 | **Team Member 3** | Backend & Voice WebSockets Engineer | [@team_member_3](https://github.com/ankit099776-bit/VernaCode_133) |
+| 👨‍💻 | **Team Member 4** | Translation Corpus & Dataset Specialist | [@team_member_4](https://github.com/ankit099776-bit/VernaCode_133) |
+| 👩‍💻 | **Team Member 5** | Quality Assurance & Testing Lead | [@team_member_5](https://github.com/ankit099776-bit/VernaCode_133) |
+| 👨‍💻 | **Team Member 6** | Vernacular Curriculum & Pedagogy Lead | [@team_member_6](https://github.com/ankit099776-bit/VernaCode_133) |
+
+---
+
+## 🌐 Live Web Application & Demonstration Links
+
+* 🌐 **Live Public Web App (Render)**: [https://vernacode-133.onrender.com](https://vernacode-133.onrender.com)
+* 🏫 **Teacher Portal**: [https://vernacode-133.onrender.com/teacher](https://vernacode-133.onrender.com/teacher)
+* 👦 **Student Learning Portal**: [https://vernacode-133.onrender.com/student](https://vernacode-133.onrender.com/student)
+* 💻 **GitHub Repository**: [https://github.com/ankit099776-bit/VernaCode_133](https://github.com/ankit099776-bit/VernaCode_133)
 
 ---
 
@@ -13,7 +33,7 @@ A high-performance, dual-mode (ONLINE & OFFLINE) classroom voice translation sys
 
 ```text
 ===================================================================================
-                               TEACHER DEVICE (Laptop)
+                                TEACHER DEVICE (Laptop)
 ===================================================================================
                        [ Teacher Speaks Hindi into Microphone ]
                                           │
@@ -34,8 +54,8 @@ A high-performance, dual-mode (ONLINE & OFFLINE) classroom voice translation sys
                                           ▼
                          ┌─────────────────────────────────┐
                          │      Santali TTS Engine         │
-                         │   • AI4Bharat Indic-Parler-TTS  │
-                         │   • (or Bhashini Dhruva API)    │
+                         │   • Sarvam / Bhashini API       │
+                         │   • OFFLINE: Indic-Parler-TTS   │
                          └────────────────┬────────────────┘
                                           │ Santali WAV Audio
                                           ▼
@@ -43,7 +63,7 @@ A high-performance, dual-mode (ONLINE & OFFLINE) classroom voice translation sys
                          │ WebSocket Broadcast Controller  │
                          │      (/ws/v1/voice-stream)      │
                          └────────────────┬────────────────┘
-                                          │ Local Wi-Fi / LAN (Zero Internet)
+                                          │ Local Wi-Fi / Cloud WebSockets
 ================================──────────┼────────────────========================
                                           │
                                           ▼
@@ -61,9 +81,9 @@ A high-performance, dual-mode (ONLINE & OFFLINE) classroom voice translation sys
 
 * **Zero Cloud Dependency**: Once models are cached locally, ASR, Translation, and TTS require **no Internet connection** and send **0 cloud API requests**.
 * **Local LAN Communication**: The Teacher backend runs locally on the teacher device (`http://192.168.x.x:8000`), and student devices connect over local Wi-Fi/LAN via WebSockets.
-* **Provider Architecture**:
-  * **ONLINE MODE**: Sarvam ASR + Sarvam Hindi $\rightarrow$ Santali Translation + AI4Bharat TTS.
-  * **OFFLINE MODE**: `faster-whisper` (ASR) + `facebook/nllb-200-distilled-600M` (`hin_Deva` $\rightarrow$ `sat_Olck`) + AI4Bharat local TTS.
+* **Dual-Mode Provider Architecture**:
+  * **ONLINE MODE**: Sarvam ASR + Sarvam Hindi $\rightarrow$ Santali Translation + Bhashini / Sarvam TTS.
+  * **OFFLINE MODE**: `faster-whisper` (ASR) + `facebook/nllb-200-distilled-600M` (`hin_Deva` $\rightarrow$ `sat_Olck`) + Indic-Parler local TTS.
 
 ---
 
@@ -76,73 +96,31 @@ A high-performance, dual-mode (ONLINE & OFFLINE) classroom voice translation sys
 | **Local TTS** | `ai4bharat/indic-parler-tts` | FP32 / CPU | **44.18s – 61.43s** |
 | **Total End-to-End** | **Full Local Offline Pipeline** | **CPU** | **~50.6s – 74.6s** |
 
-*(Note: End-to-end latency can be accelerated down to <3 seconds on an NVIDIA GPU or with model INT8 quantization).*
-
 ---
 
-## 📦 Local Model Requirements
+## 🛠️ Deployment & Installation Setup Guide
 
-1. **Local ASR**: `openai/whisper-tiny` (or `faster-whisper` tiny) ~75 MB disk, ~500 MB RAM.
-2. **Local Translation**: `facebook/nllb-200-distilled-600M` ~2.4 GB disk, ~1.5 GB RAM.
-3. **Local TTS**: `ai4bharat/indic-parler-tts` ~1.8 GB disk, ~2.0 GB RAM.
+### 1. One-Click Cloud Web Deployment (Render)
+- Build Command: `pip install -r requirements.txt && cd frontend && npm install && npm run build`
+- Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
----
-
-## 🛠️ Installation & Setup Guide
-
-### 1. Environment Setup
+### 2. Local Desktop Run
 ```bash
-git clone https://github.com/ankit099776-bit/bhashasetu-voice-module.git
-cd bhashasetu-voice-module
-
-# Activate environment with PyTorch and Transformers installed
-.\.venv-ai4bharat\Scripts\activate
+git clone https://github.com/ankit099776-bit/VernaCode_133.git
+cd VernaCode_133
+python app.main
 ```
-
-### 2. Configure Environment (`.env`)
-```env
-PIPELINE_MODE=offline
-ASR_PROVIDER=local
-TRANSLATION_PROVIDER=local
-TTS_PROVIDER=ai4bharat
-
-LOCAL_ASR_MODEL_NAME=openai/whisper-tiny
-LOCAL_TRANSLATION_MODEL_NAME=facebook/nllb-200-distilled-600M
-TTS_MODEL_NAME=ai4bharat/indic-parler-tts
-```
-
----
-
-## 🚀 Running the Classroom Demo
-
-### 1. Start Server on Teacher Device
-```bash
-python app/main.py
-```
-* Or via Uvicorn:
-  ```bash
-  uvicorn app.main:app --host 0.0.0.0 --port 8000
-  ```
-
-### 2. Access Web UIs
-* **Dashboard / Mode Switcher**: `http://localhost:8000/`
-* **Teacher Classroom UI**: `http://localhost:8000/teacher` (or `http://<TEACHER_LOCAL_IP>:8000/teacher`)
-* **Student Receiver UI**: `http://<TEACHER_LOCAL_IP>:8000/student`
-* **Diagnostic Status API**: `http://localhost:8000/api/v1/status`
+Open browser at `http://localhost:8000`.
 
 ---
 
 ## 🧪 Verification & Testing
 
-### 1. Run Complete Pytest Suite (41 Tests)
+### Run Pytest Test Suite (63 Tests)
 ```bash
-.\.venv-ai4bharat\Scripts\python.exe -m pytest
+pytest tests/
 ```
-
-### 2. Run Full Offline Pipeline Verification Script
-```bash
-.\.venv-ai4bharat\Scripts\python.exe scripts/verify_offline_pipeline.py
-```
+Result: `63 passed in 27.75s`
 
 ---
 
