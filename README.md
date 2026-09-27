@@ -13,7 +13,7 @@
 | :---: | :--- | :--- | :--- |
 | 👑 | **Ankit Pandey** | **Team Lead** & Full-Stack AI Architect | [@ankit099776-bit](https://github.com/ankit099776-bit) |
 | 👨‍💻 | **Aditi Gupta** | Frontend & Ol Chiki UI Specialist | [@aaditigupta-create](https://github.com/aaditigupta-create) |
-| 👩‍💻 | **Abhinav Raghuvanshi** | Backend & Voice WebSockets Engineer | [@AbhinavRaghuvanshi77 ]((https://github.com/AbhinavRaghuvanshi77)) |
+| 👩‍💻 | **Abhinav Raghuvanshi** | Backend & Voice WebSockets Engineer | [@AbhinavRaghuvanshi77]((https://github.com/AbhinavRaghuvanshi77)) |
 | 👨‍💻 | **Alok Kumar Pandey** | Translation Corpus & Dataset Specialist | [@alokkumarpandey8088-alt](https://github.com/alokkumarpandey8088-alt) |
 | 👩‍💻 | **Ayush Yadav** | Quality Assurance & Testing Lead | [@Ayush-Yadav06](https://github.com/Ayush-Yadav06) |
 | 👨‍💻 | **Avinash Pandey** | Vernacular Curriculum & Pedagogy Lead | [@imavinashpandey-star]((https://github.com/imavinashpandey-star)) |
