@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 19px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html.font-size-small {
+    font-size: 17px;
+  }
+
+  html.font-size-normal {
+    font-size: 19px;
+  }
+
+  html.font-size-large {
+    font-size: 21px;
+  }
+
+  body {
+    font-family: 'Mukta', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.65;
+    letter-spacing: 0.015em;
+    background-color: #FAF7F0;
+    color: #1c2e24;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  html.dark {
+    color-scheme: dark;
+    background-color: #0A1610;
+  }
+
+  html.dark body {
+    background-color: #0A1610 !important;
+    color: #E8F3ED !important;
+  }
+}
+
+/* ========================================================
+   GLOBAL DARK THEME CASCADE
+   Deep Forest Green Aesthetic (#0A1610 / #0E1F17 / #12241A)
+   High-Contrast Razor Sharp Typography & Card Surfaces
+   ======================================================== */
+html.dark {
+  /* Surfaces & Cards */
+  .bg-white {
+    background-color: #12241A !important;
+  }
+  .bg-cream-100,
+  .bg-cream-50,
+  .bg-\[\#FAF7F0\],
+  .bg-\[\#FAF4E8\],
+  .bg-\[\#FAF2E2\] {
+    background-color: #0E1F17 !important;
+  }
+  .bg-stone-50 {
+    background-color: #162E22 !important;
+  }
+  .bg-stone-100 {
+    background-color: #1B3528 !important;
+  }
+
+  /* Pastel Theme Cards */
+  .bg-pastel-green {
+    background-color: #173B2A !important;
+  }
+  .bg-pastel-blue {
+    background-color: #143240 !important;
+  }
+  .bg-pastel-peach {
+    background-color: #382019 !important;
+  }
+  .bg-pastel-purple {
+    background-color: #2D1F3E !important;
+  }
+  .bg-pastel-amber {
+    background-color: #382914 !important;
+  }
+
+  /* Borders */
+  .border-stone-200,
+  .border-stone-100,
+  .border-stone-300,
+  .border-forest-200\/90,
+  .border-pastel-greenBorder,
+  .border-pastel-blueBorder,
+  .border-pastel-peachBorder,
+  .border-pastel-purpleBorder,
+  .border-pastel-amberBorder {
+    border-color: #224734 !important;
+  }
+
+  /* Primary Headings & Crisp White Text */
+  .text-forest-900,
+  .text-stone-900,
+  .text-stone-800,
+  .text-\[\#143D2B\],
+  .text-\[\#133221\]:not(.splash-text-dark) {
+    color: #FFFFFF !important;
+  }
+
+  /* Secondary & High-Contrast Accents */
+  .text-forest-700,
+  .text-forest-800,
+  .text-emerald-700 {
+    color: #6EE7B7 !important;
+  }
+  .text-stone-700,
+  .text-stone-600 {
+    color: #D1EAE0 !important;
+  }
+  .text-stone-500,
+  .text-stone-400 {
+    color: #A3C9B8 !important;
+  }
+
+  /* Protect Text Over Fixed Light Image Artworks */
+  .splash-text-dark {
+    color: #133221 !important;
+  }
+
+  /* Interactive Elements */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea,
+  select {
+    background-color: #162E22 !important;
+    border-color: #2B573F !important;
+    color: #FFFFFF !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #8BAF9E !important;
+  }
+
+  /* Hover States */
+  .hover\:bg-stone-50:hover,
+  .hover\:bg-cream-50:hover {
+    background-color: #1A3828 !important;
+  }
+  .hover\:bg-stone-100:hover {
+    background-color: #1E3E2D !important;
+  }
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F4EFE3;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #14281E;
+}
+::-webkit-scrollbar-thumb {
+  background: #C5DFCF;
+  border-radius: 4px;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2B573F;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #357C54;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3E7C5A;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
+
+/* Phone Mockup Frame Shadow */
+.phone-shadow {
+  box-shadow: 0 25px 60px -15px rgba(117, 189, 224, 0.35), 0 0 0 1px rgba(248, 188, 154, 0.25);
+}
+
+/* 3D Flip Card Effect */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+@keyframes wave-bar {
+  0%, 100% { height: 6px; }
+  50% { height: 28px; }
+}
+
+.animate-wave-1 { animation: wave-bar 1.1s ease-in-out infinite; }
+.animate-wave-2 { animation: wave-bar 0.9s ease-in-out infinite 0.2s; }
+.animate-wave-3 { animation: wave-bar 1.3s ease-in-out infinite 0.4s; }
+.animate-wave-4 { animation: wave-bar 0.8s ease-in-out infinite 0.1s; }
+.animate-wave-5 { animation: wave-bar 1.2s ease-in-out infinite 0.3s; }
+
+/* Custom Glassmorphism & Micro-animations */
+.glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+html.dark .glass-card {
+  background: rgba(18, 36, 26, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(34, 71, 52, 0.5);
+}
+
+.shadow-glow-emerald {
+  box-shadow: 0 10px 30px -5px rgba(27, 77, 54, 0.3), 0 0 15px rgba(52, 211, 153, 0.2);
+}
+
+.shadow-glow-amber {
+  box-shadow: 0 10px 30px -5px rgba(217, 119, 6, 0.3), 0 0 15px rgba(251, 191, 36, 0.25);
+}
+
+@keyframes sonar-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-sonar {
+  animation: sonar-ring 1.8s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="sat">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ᱵᱷᱟᱥᱟᱥᱮᱛᱩ AI — ᱪᱮᱛᱮᱫᱤᱭᱟᱹ ᱞᱟᱭᱤᱵᱽ ᱠᱞᱟᱥ</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/auth.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/static/i18n.js"></script>
+  <script src="/static/translator_data.js"></script>
+  <script src="/static/audioService.js"></script>
+</head>
+<body style="background: #090d16;">
+  <nav class="navbar">
+    <a href="/student" class="brand">
+      <div class="brand-icon">👨‍🎓</div>
+      <div>
+        <div data-i18n="classroom.title">ᱪᱮᱛᱮᱫᱤᱭᱟᱹ ᱞᱟᱭᱤᱵᱽ ᱠᱞᱟᱥ</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">ᱠᱞᱟᱥ ᱠᱳᱰ: <span id="display-room-code">BHASA-204</span></div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><div id="ws-connection-status" class="status-badge" style="background: rgba(234, 179, 8, 0.15); color: #facc15; border-color: rgba(234, 179, 8, 0.3);"><span class="status-dot" style="background: #facc15; box-shadow: 0 0 8px #facc15;"></span> ᱡᱚᱲᱟᱣᱚᱜ ᱠᱟᱱᱟ...</div></li>
+      <li><div id="teacher-connection-status" class="status-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3);">👩‍🏫 ᱢᱟᱪᱮᱛ ᱡᱚᱲᱟᱣ ᱮᱱᱟᱭ</div></li>
+      <li><a href="/student" class="btn btn-secondary" style="padding: 0.4rem 0.8rem;">ᱠᱞᱟᱥ ᱵᱟᱹᱜᱤᱭ ᱢᱮ</a></li>
+    </ul>
+  </nav>
+
+  <main class="container" style="max-width: 900px;">
+    <!-- Audio Permission Banner -->
+    <div class="audio-banner" id="audio-unlock-banner">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span style="font-size: 2rem;">🔊</span>
+        <div>
+          <div style="font-weight: 700; font-size: 1.1rem;" data-i18n="enable_audio">🔊 ᱟᱲᱟᱝ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</div>
+          <div style="font-size: 0.9rem; color: #c7d2fe;" data-i18n="enable_audio_desc">ᱢᱟᱪᱮᱛᱟᱜ ᱥᱟᱱᱛᱟᱲᱤ ᱟᱲᱟᱝ ᱟᱸᱡᱚᱢ ᱞᱟᱹᱜᱤᱫ ᱱᱚᱸᱰᱮ ᱞᱤᱱ ᱢᱮ ᱾</div>
+        </div>
+      </div>
+      <button id="enableAudioBtn" type="button" class="btn btn-success btn-large">🔊 ᱟᱲᱟᱝ ᱪᱟᱹᱞᱩᱭ ᱢᱮ (ENABLE AUDIO)</button>
+    </div>
+
+    <!-- Teacher Live Broadcast Card -->
+    <div class="card" style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid rgba(99, 102, 241, 0.4); padding: 2rem; margin-bottom: 2rem; text-align: center;">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; color: #a5b4fc; font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem;">
+        <span data-i18n="classroom.teacher_speaking">👩‍🏫 ᱢᱟᱪᱮᱛ ᱮ ᱨᱚᱲᱮᱫᱟ...</span>
+      </div>
+
+      <!-- Large Ol Chiki Output Display -->
+      <div id="incoming-santali-text" class="ol-chiki" style="font-size: 2.2rem; font-weight: 700; color: #34d399; min-height: 120px; display: flex; align-items: center; justify-content: center; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 1rem; border: 1px solid rgba(16, 185, 129, 0.3); margin-bottom: 1rem;">
+        ( ᱡᱚᱦᱟᱨ ! ᱢᱟᱪᱮᱛᱟᱜ ᱨᱚᱲ ᱞᱟᱹᱜᱤᱫ ᱛᱟᱺᱜᱤ ᱨᱮ... )
+      </div>
+
+      <div id="incoming-santali-dev" style="font-size: 1.1rem; color: #fbbf24; font-weight: 600; margin-bottom: 0.3rem;"></div>
+      <div id="incoming-santali-lat" style="font-size: 0.95rem; color: #cbd5e1; margin-bottom: 0.8rem;"></div>
+
+      <div id="incoming-hindi-sub" style="font-size: 1rem; color: var(--text-muted);">
+        ᱦᱤᱱᱫᱤ ᱢᱮᱱᱮᱛ ᱱᱚᱸᱰᱮ ᱚᱞᱚᱜᱼᱟ...
+      </div>
+
+      <!-- Replay Button -->
+      <div style="margin-top: 1rem;">
+        <button id="btn-replay-audio" type="button" class="btn btn-primary" style="padding: 0.6rem 1.25rem; font-size: 1rem; border-radius: 0.75rem; font-weight: 700; background: linear-gradient(135deg, #10b981, #059669);" onclick="replayStudentAudio()">
+          🔊 ᱟᱲᱟᱝ ᱫᱚᱦᱲᱟ ᱟᱸᱡᱚᱢ (REPLAY AUDIO AGAIN)
+        </button>
+      </div>
+
+      <!-- Voice Pack Selector -->
+      <div style="margin-top: 1rem; font-size: 0.85rem; color: #a5b4fc;">
+        🎙️ ᱟᱲᱟᱝ (Voice Pack):
+        <select id="studentVoicePackSelect" style="padding: 0.3rem 0.6rem; border-radius: 0.4rem; border: 1px solid #6366f1; font-weight: 600; color: #fff; background: #1e1b4b;">
+          <option value="female_calm">👧 Santali Female Voice (Bhashini / Sarvam)</option>
+          <option value="male_expressive">👦 Santali Male Voice (Bhashini / Sarvam)</option>
+          <option value="teacher_hindi">👩‍🏫 Hindi Female Teacher (Sarvam Ritu)</option>
+          <option value="teacher_male_hindi">👨‍🏫 Hindi Male Teacher (Sarvam Arvind)</option>
+          <option value="ollama_dynamic">🤖 Ollama AI Dynamic Voice Pack</option>
+        </select>
+      </div>
+
+      <!-- Reusable Audio Player Component & Student Audio Debug Panel -->
+      <div id="audio-player-container" style="margin-top:1.5rem;"></div>
+      <div id="audio-debug-panel"></div>
+    </div>
+
+    <!-- Student Microphone & Response Card -->
+    <div class="card" style="text-align: center; padding: 2rem; border-color: rgba(16, 185, 129, 0.4);">
+      <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem;" data-i18n="classroom.speak_to_teacher">ᱢᱟᱪᱮᱛ ᱴᱷᱮᱱ ᱨᱚᱲ ᱢᱮ</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        ᱢᱟᱭᱠᱨᱳᱯᱷᱳᱱ ᱞᱤᱱ ᱠᱟᱛᱮ ᱥᱟᱱᱛᱟᱲᱤ ᱛᱮ ᱠᱩᱠᱞᱤ ᱠᱩᱞᱤᱭᱮᱢ ᱥᱮ ᱨᱳᱲ ᱢᱮ !
+      </p>
+
+      <button id="btn-student-mic" class="btn btn-success" style="width: 130px; height: 130px; border-radius: 50%; font-size: 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 1.25rem;" onclick="toggleStudentRecording()">
+        <span style="font-size: 2.5rem; margin-bottom: 0.25rem;">🎤</span>
+        <span id="student-mic-label" style="font-weight: 700;" data-i18n="classroom.speak_btn">🎤 ᱥᱟᱱᱛᱟᱲᱤ ᱛᱮ ᱨᱚᱲ ᱢᱮ</span>
+      </button>
+
+      <div id="student-live-status" style="font-size: 1rem; font-weight: 700; color: #34d399; min-height: 24px;">
+        ᱨᱚᱲ ᱞᱟᱹᱜᱤᱫ ᱛᱟᱹᱭᱟᱹᱨ...
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+    let ws = null;
+    let roomCode = 'BHASA-204';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('room')) {
+      roomCode = urlParams.get('room').toUpperCase();
+      document.getElementById('display-room-code').innerText = roomCode;
+    }
+
+    function initWebSocket() {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${protocol}//${window.location.host}/api/v1/ws/v1/voice-stream`;
+      ws = new WebSocket(wsUrl);
+
+      ws.onopen = () => {
+        const badge = document.getElementById('ws-connection-status');
+        badge.style.background = 'rgba(16, 185, 129, 0.15)';
+        badge.style.color = '#34d399';
+        badge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+        badge.innerHTML = '<span class="status-dot"></span> 🟢 ᱡᱚᱲᱟᱣ ᱮᱱᱟ';
+        
+        ws.send(JSON.stringify({
+          action: 'join_room',
+          room_code: roomCode,
+          role: 'student'
+        }));
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          const eventType = msg.type || msg.event;
+          console.log("[AUDIO-TRACE] STUDENT RECEIVED WS MSG type:", eventType, "state:", ws.readyState === 1 ? "OPEN" : ws.readyState);
+          if (eventType === 'voice_translation') {
+            console.log("[AUDIO-TRACE] STUDENT RECEIVED voice_translation");
+            console.log("[AUDIO-TRACE] payload keys:", Object.keys(msg));
+            console.log("[AUDIO-TRACE] audio exists:", !!(msg.audio_base64 || msg.audio));
+            console.log("[AUDIO-TRACE] audio length:", (msg.audio_base64 || msg.audio || "").length);
+            console.log("[AUDIO-TRACE] mime:", msg.mime_type || msg.mime);
+            console.log("[AUDIO-TRACE] format:", msg.audio_format || msg.format);
+            console.log("[AUDIO-TRACE] sample_rate:", msg.sample_rate);
+          }
+          handleWSMessage(msg);
+        } catch(e) {
+          console.error('[AUDIO-TRACE] WS parsing error:', e);
+        }
+      };
+
+      ws.onclose = () => {
+        const badge = document.getElementById('ws-connection-status');
+        badge.style.background = 'rgba(239, 68, 68, 0.15)';
+        badge.style.color = '#f87171';
+        badge.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+        badge.innerHTML = '<span class="status-dot" style="background:#f87171;"></span> 🔴 ᱡᱚᱲᱟᱣᱚᱜ ᱠᱟᱱᱟ...';
+        setTimeout(initWebSocket, 3000);
+      };
+    }
+
+    function replayStudentAudio() {
+      if (window.bhashaAudioPlayer && window.bhashaAudioPlayer.lastSantaliAudioBlob) {
+        console.log("[BhashaSetu] Replaying last Santali audio Blob via AudioPlayer...");
+        window.bhashaAudioPlayer.playAudioBlob(window.bhashaAudioPlayer.lastSantaliAudioBlob, "REPLAY_BUTTON");
+      } else {
+        const text = document.getElementById('incoming-santali-lat').innerText || document.getElementById('incoming-santali-dev').innerText || document.getElementById('incoming-santali-text').innerText;
+        speakTextFallback(text);
+      }
+    }
+
+    function speakTextFallback(text) {
+      if (!text || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.rate = 0.9;
+        const voices = window.speechSynthesis.getVoices();
+        const indVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('IN'));
+        if (indVoice) utter.voice = indVoice;
+        window.speechSynthesis.speak(utter);
+      } catch(e) { console.warn("[TTS Fallback]", e); }
+    }
+
+    function handleWSMessage(msg) {
+      const eventType = msg.type || msg.event;
+      const reqId = msg.request_id || "N/A";
+
+      if (eventType === 'text_translation') {
+        if (msg.direction === 'teacher_to_student') {
+          console.log(`[REQUEST_TRACE] request_id=${reqId} | Text translation received | transcription="${msg.transcription}" | translation="${msg.translation}"`);
+          document.getElementById('incoming-santali-text').innerText = msg.translation;
+          document.getElementById('incoming-hindi-sub').innerText = `ᱦᱤᱱᱫᱤ ᱢᱮᱱᱮᱛ: "${msg.transcription}"`;
+          if (msg.devanagari || msg.latin) {
+            document.getElementById('incoming-santali-dev').innerText = msg.devanagari || '';
+            document.getElementById('incoming-santali-lat').innerText = msg.latin || '';
+          }
+        }
+      } else if (eventType === 'voice_translation') {
+        if (msg.direction === 'teacher_to_student') {
+          console.log(`[REQUEST_TRACE] request_id=${reqId} | 11. Student received message | audio_duration=${msg.audio_duration}s | byte_length=${msg.byte_length}`);
+          document.getElementById('incoming-santali-text').innerText = msg.translation;
+          if (msg.devanagari || msg.latin) {
+            document.getElementById('incoming-santali-dev').innerText = msg.devanagari || '';
+            document.getElementById('incoming-santali-lat').innerText = msg.latin || '';
+          }
+          if (msg.audio_base64 || msg.audio) {
+            console.log(`[REQUEST_TRACE] request_id=${reqId} | 12. Student playback audio duration=${msg.audio_duration}s`);
+            window.bhashaAudioPlayer.playBase64Audio(msg);
+          } else {
+            speakTextFallback(msg.latin || msg.devanagari || msg.translation);
+          }
+        } else if (msg.direction === 'student_to_teacher') {
+          document.getElementById('student-live-status').innerText = '✅ ᱢᱟᱪᱮᱛ ᱴᱷᱮᱱ ᱵᱷᱮᱡᱟᱭᱮᱱᱟ';
+        }
+      } else if (eventType === 'voice_translation_error') {
+        alert('Audio error: ' + msg.message + ' (' + msg.details + ')');
+      }
+    }
+
+    async function toggleStudentRecording() {
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = event => {
+            if (event.data.size > 0) audioChunks.push(event.data);
+          };
+
+          mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            document.getElementById('student-live-status').innerText = 'ᱥᱟᱱᱛᱟᱲᱤ ᱟᱲᱟᱝ ᱚᱞᱚᱜ ᱠᱟᱱᱟ (ASR)...';
+
+            const reader = new FileReader();
+            reader.readAsDataURL(audioBlob);
+            reader.onloadend = () => {
+              const base64Audio = reader.result.split(',')[1];
+              document.getElementById('student-live-status').innerText = 'ᱦᱤᱱᱫᱤ ᱛᱮ ᱛᱚᱨᱡᱚᱢᱟᱜ ᱠᱟᱱᱟ...';
+              
+              ws.send(JSON.stringify({
+                action: 'translate_audio',
+                audio_base64: base64Audio,
+                source_language: 'sat',
+                target_language: 'hi',
+                direction: 'student_to_teacher',
+                room_code: roomCode,
+                voice_pack: document.getElementById('studentVoicePackSelect')?.value || 'teacher_hindi'
+              }));
+            };
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          const btn = document.getElementById('btn-student-mic');
+          btn.className = 'btn btn-success mic-active';
+          btn.style.background = 'linear-gradient(135deg, #ef4444, #f59e0b)';
+          document.getElementById('student-mic-label').innerText = 'ᱨᱚᱲ ᱵᱚᱸᱫᱚᱭ ᱢᱮ';
+          document.getElementById('student-live-status').innerText = 'ᱚᱞᱚᱜ ᱠᱟᱱᱟ... (ᱥᱟᱱᱛᱟᱲᱤ ᱛᱮ ᱨᱚᱲ ᱢᱮ)';
+        } catch(err) {
+          alert('Microphone Error: ' + err.message + '\nPlease check HTTPS and browser microphone permissions.');
+        }
+      } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        const btn = document.getElementById('btn-student-mic');
+        btn.className = 'btn btn-success';
+        btn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+        document.getElementById('student-mic-label').innerText = '🎤 ᱥᱟᱱᱛᱟᱲᱤ ᱛᱮ ᱨᱚᱲ ᱢᱮ';
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const button = document.getElementById("enableAudioBtn");
+      if (button) {
+        console.log("[BhashaSetu] ENABLE AUDIO button found");
+        button.addEventListener("click", async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log("[BhashaSetu] ENABLE AUDIO clicked");
+          await window.bhashaAudioPlayer.initAudioContext();
+        });
+      } else {
+        console.error("[BhashaSetu] ENABLE AUDIO button not found");
+      }
+    });
+
+    window.onload = () => {
+      initWebSocket();
+      window.bhashaAudioPlayer.renderDebugPanel();
+    };
+  </script>
+</body>
+</html>

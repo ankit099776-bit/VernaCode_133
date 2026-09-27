@@ -1,0 +1,15 @@
+{"source": "बच्चे मैदान में खेल रहे हैं।", "target": "ᱜᱤᱫᱽᱨᱟᱹ ᱠᱚ ᱴᱟᱹᱱᱰᱤ ᱨᱮ ᱠᱚ ᱮᱱᱮᱡ ᱠᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "साफ़-सफाई रखना बहुत ज़रूरी है।", "target": "ᱯᱷᱟᱨᱪᱟ-ᱥᱟᱯᱷᱟ ᱫᱚᱦᱚ ᱟᱹᱰᱤ ᱞᱟᱹᱠᱛᱤᱭᱟ᱾", "dataset_source": "coild"}
+{"source": "यह किताब बहुत अच्छी है।", "target": "ᱱᱚᱣᱟ ᱯᱩᱛᱷᱤ ᱫᱚ ᱟᱹᱰᱤ ᱱᱟᱯᱟᱭᱟ᱾", "dataset_source": "coild"}
+{"source": "धान की फ़सल में पानी की आवश्यकता क्या है?", "target": "ᱦᱩᱲᱩ ᱪᱟᱥ ᱨᱮ ᱫᱟᱜ ᱨᱮᱱᱟᱜ ᱞᱟᱹᱠᱛᱤ ᱪᱮᱫ?", "dataset_source": "agriculture"}
+{"source": "शिक्षा सबका अधिकार है।", "target": "ᱥᱮᱪᱮᱫ ᱫᱚ ᱡᱚᱛᱚ ᱦᱚᱲᱟᱜ ᱦᱚᱠ ᱠᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "सोमवार को वैज्ञानिकों ने घोषणा की।", "target": "ᱚᱛᱮ ᱢᱟᱦᱟᱸ ᱦᱤᱞᱳ knock ᱥᱟᱬᱮᱥᱤᱭᱟᱹ ᱠᱚ ᱞᱟᱹᱭ ᱥᱚᱫᱚᱨ ᱠᱮᱫᱼᱟ᱾", "dataset_source": "flores_dev"}
+{"source": "यह ऐतिहासिक खोज मानी जा रही है।", "target": "ᱱᱚᱣᱟ ᱫᱚ ᱱᱟᱜᱟᱢᱤᱭᱟᱹ ᱧᱟᱢ ᱢᱮᱱᱛᱮ ᱞᱮᱠᱷᱟᱜᱼᱟ᱾", "dataset_source": "flores_dev"}
+{"source": "अन्तरिक्ष यान ने नई तस्वीरें भेजी हैं।", "target": "ᱥᱮᱨᱢᱟ ᱜᱟᱹᱰᱤ ᱱᱟᱣᱟ ᱪᱤᱛᱟᱹᱨ ᱮ ᱠᱩᱞ ᱟᱠᱟᱫᱼᱟ᱾", "dataset_source": "flores_dev"}
+{"source": "मौसम विभाग ने बारिश की चेतावनी दी।", "target": "ᱨᱤᱢᱤᱞ ᱵᱤᱵᱷᱟᱜᱽ ᱫᱟᱜ ᱡᱟᱹᱲᱤ ᱨᱮᱱᱟᱜ ᱦᱩ trade ᱮᱢ ᱠᱮᱫᱼᱟ᱾", "dataset_source": "flores_dev"}
+{"source": "लोग सुरक्षित स्थानों पर पहुँच रहे हैं।", "target": "ᱦᱚᱲ ᱠᱚ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱴᱷᱟᱶ ᱛᱮ ᱥᱮᱴᱮᱨᱚᱜ ᱠᱟᱱᱟ ᱠᱚ᱾", "dataset_source": "flores_dev"}
+{"source": "नदी का जल स्तर बढ़ रहा है।", "target": "gadgets ᱜᱟᱰᱟ ᱨᱮᱱᱟᱜ ᱫᱟᱜ ᱦᱟᱨᱟᱜ ᱠᱟᱱᱟ᱾", "dataset_source": "flores_dev"}
+{"source": "स्वास्थ्य सेवाएँ उपलब्ध हैं।", "target": "ᱞᱟ align ᱥᱮᱣᱟ ᱠᱚ ᱧᱟᱢᱚᱜ ᱠᱟᱱᱟ᱾", "dataset_source": "flores_dev"}
+{"source": "सड़क यातायात सुचारु है।", "target": "horror ᱰᱟᱦᱟᱨ ᱥᱮᱱᱚᱜ ᱱᱟᱯᱟᱭ ᱜᱮᱭᱟ᱾", "dataset_source": "flores_dev"}
+{"source": "कृषि कार्य शुरू हो चुका है।", "target": "ᱪᱟᱥ ᱠᱟᱹᱢᱤ ᱮᱦᱚᱵ ᱟᱠᱟᱱᱟ᱾", "dataset_source": "flores_dev"}
+{"source": "बाज़ार में चहल-पहल है।", "target": "ᱦᱟᱴ ᱨᱮ ᱦᱚᱲ ᱠᱚ ᱵᱷᱤᱲ ᱟᱠᱟᱱᱟ ᱠᱚ᱾", "dataset_source": "flores_dev"}

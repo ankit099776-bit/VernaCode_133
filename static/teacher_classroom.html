@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — शिक्षक लाइव कक्षा</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/static/i18n.js"></script>
+  <script src="/static/translator_data.js"></script>
+  <script src="/static/audioService.js"></script>
+  <script src="/static/auth.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/teacher" class="brand">
+      <div class="brand-icon">👩‍🏫</div>
+      <div>
+        <div data-i18n="classroom.title">शिक्षक लाइव दो-तरफा कक्षा</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">कमरा: <span id="display-room-code">BHASA-204</span></div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><div id="ws-connection-status" class="status-badge" style="background: rgba(234, 179, 8, 0.15); color: #facc15; border-color: rgba(234, 179, 8, 0.3);"><span class="status-dot" style="background: #facc15; box-shadow: 0 0 8px #facc15;"></span> जुड़ रहा है...</div></li>
+      <li><div id="student-connection-status" class="status-badge" style="background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border-color: rgba(99, 102, 241, 0.3);" data-i18n="classroom.student_connected">👥 1 विद्यार्थी जुड़े हुए हैं</div></li>
+      <li><a href="/teacher" class="btn btn-secondary" style="padding: 0.4rem 0.8rem;">कमरा छोड़ें</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <!-- Audio Unlock Banner for Teacher (When listening to student response) -->
+    <div class="audio-banner" id="audio-unlock-banner">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span style="font-size: 1.5rem;">🔊</span>
+        <div>
+          <div style="font-weight: 700;" data-i18n="enable_audio">ऑडियो सक्षम करें</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);" data-i18n="enable_audio_desc">विद्यार्थी के उत्तर देने पर स्वतः हिंदी ऑडियो सुनने हेतु क्लिक करें।</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="window.bhashaAudioPlayer.initAudioContext();">🔊 ऑडियो सक्षम करें</button>
+    </div>
+
+    <!-- Direction Mode Selection Bar -->
+    <div class="card" style="margin-bottom: 1.5rem; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div style="font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+        <span data-i18n="classroom.mode_title">अनुवाद दिशा:</span>
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button id="mode-t2s" class="btn btn-primary" onclick="setMode('t2s')" data-i18n="classroom.mode_t2s">हिंदी → संताली (शिक्षक ➔ विद्यार्थी)</button>
+        <button id="mode-s2t" class="btn btn-secondary" onclick="setMode('s2t')" data-i18n="classroom.mode_s2t">संताली → हिंदी (विद्यार्थी ➔ शिक्षक)</button>
+        <button id="mode-twoway" class="btn btn-success" onclick="setMode('twoway')" data-i18n="classroom.mode_twoway">↔ द्वि-मार्गी लाइव मोड</button>
+      </div>
+    </div>
+
+    <!-- Voice Pack Selector Bar -->
+    <div class="card" style="margin-bottom: 1.5rem; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
+      <div style="font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: #065f46;">
+        <span>🎙️ वॉइस पैक (Ollama AI Voice Pack):</span>
+      </div>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <select id="voicePackSelect" style="padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid #10b981; font-weight: 600; color: #064e3b; background: #ecfdf5;">
+          <option value="female_calm">👧 Santali Female Calm (AI4Bharat)</option>
+          <option value="male_expressive">👦 Santali Male Expressive (AI4Bharat)</option>
+          <option value="teacher_hindi">👩‍🏫 Hindi Female Teacher (Sarvam Ritu)</option>
+          <option value="teacher_male_hindi">👨‍🏫 Hindi Male Teacher (Sarvam Arvind)</option>
+          <option value="ollama_dynamic">🤖 Ollama AI Dynamic Voice Pack</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Microphone Control Card -->
+      <div class="card" style="text-align: center; padding: 2rem;">
+        <div style="color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem;">शिक्षक माइक्रोफोन</div>
+        
+        <button id="btn-mic" class="btn btn-primary" style="width: 140px; height: 140px; border-radius: 50%; font-size: 1.1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #4f46e5, #06b6d4);" onclick="toggleRecording()">
+          <span style="font-size: 2.5rem; margin-bottom: 0.25rem;">🎤</span>
+          <span id="mic-label" style="font-size: 0.85rem; font-weight: 700;" data-i18n="classroom.mic_label_start">बोलने के लिए दबाएँ</span>
+        </button>
+
+        <div id="live-status" style="font-size: 1rem; font-weight: 700; color: #38bdf8; min-height: 24px;">
+          सुनने हेतु तैयार...
+        </div>
+
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+          स्रोत: <strong style="color: #fff;">हिंदी (hi-IN)</strong> ➔ लक्ष्य: <strong style="color: #34d399;">संताली (sat-IN ओल चिकी)</strong>
+        </div>
+      </div>
+
+      <!-- Real-Time Speech & Translation Output Card -->
+      <div class="card">
+        <h3 style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <span>वर्तमान वाक् प्रसारण</span>
+          <span id="telemetry-badge" class="tag-proto" style="display: none;">पाठ: ~1.8s | TTS: ~45s</span>
+        </h3>
+
+        <div style="margin-bottom: 1.25rem;">
+          <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.4rem;" data-i18n="classroom.your_speech">आपका हिंदी संदेश (ASR पाठ)</div>
+          <div id="output-hindi" style="background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); padding: 1rem; border-radius: 0.75rem; min-height: 60px; font-size: 1.1rem; color: #fff;">
+            (माइक्रोफोन बटन दबाएँ व बोलें...)
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.4rem;" data-i18n="classroom.santali_translation">संताली अनुवाद (ओल चिकी पाठ)</div>
+          <div id="output-santali" class="ol-chiki" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1rem; border-radius: 0.75rem; min-height: 60px; font-size: 1.3rem; color: #34d399; font-weight: 600;">
+            (अनुपादित ओल चिकी पाठ यहाँ दिखाई देगा...)
+          </div>
+          <div id="output-santali-dev" style="font-size: 0.95rem; color: #fbbf24; font-weight: 600; margin-top: 0.4rem; min-height: 20px;"></div>
+          <div id="output-santali-lat" style="font-size: 0.85rem; color: #94a3b8; min-height: 18px;"></div>
+        </div>
+
+        <!-- Audio Player & Debug Panel for Student -> Teacher Hindi Responses -->
+        <div id="audio-player-container" style="margin-top:1rem;"></div>
+        <div id="audio-debug-panel"></div>
+      </div>
+    </div>
+
+    <!-- Live Conversation Feed / History -->
+    <div class="card" style="margin-top: 1.5rem;">
+      <h3 style="margin-bottom: 1rem;" data-i18n="classroom.feed_title">कक्षा लाइव फीड</h3>
+      <div id="conversation-feed" style="display: flex; flex-direction: column; gap: 1rem; max-height: 350px; overflow-y: auto; padding-right: 0.5rem;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); padding: 1rem; border-radius: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+            <span>👩‍🏫 शिक्षक (हिंदी ➔ संताली)</span>
+            <span>सत्र प्रारंभ</span>
+          </div>
+          <div style="font-size: 1rem; font-weight: 600;">"बच्चों, आज हम गिनती सीखेंगे।"</div>
+          <div class="ol-chiki" style="color: #34d399; font-size: 1.1rem; margin-top: 0.25rem;">"ᱜᱤᱫᱽᱨᱟᱹ ᱠᱚ, ᱛᱮᱦᱮᱧ ᱟᱵᱚ ᱞᱮᱠᱷᱟ ᱵᱚᱱ ᱥᱮᱸᱲᱟᱭᱟ ᱾"</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+    let ws = null;
+    let roomCode = 'BHASA-204';
+    let currentMode = 'twoway';
+
+    function initWebSocket() {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${protocol}//${window.location.host}/api/v1/ws/v1/voice-stream`;
+      ws = new WebSocket(wsUrl);
+
+      ws.onopen = () => {
+        const badge = document.getElementById('ws-connection-status');
+        badge.style.background = 'rgba(16, 185, 129, 0.15)';
+        badge.style.color = '#34d399';
+        badge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+        badge.innerHTML = '<span class="status-dot"></span> 🟢 जोड़ा हुआ';
+        
+        ws.send(JSON.stringify({
+          action: 'join_room',
+          room_code: roomCode,
+          role: 'teacher'
+        }));
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          handleWSMessage(msg);
+        } catch(e) {
+          console.error('WS parsing error:', e);
+        }
+      };
+
+      ws.onclose = () => {
+        const badge = document.getElementById('ws-connection-status');
+        badge.style.background = 'rgba(239, 68, 68, 0.15)';
+        badge.style.color = '#f87171';
+        badge.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+        badge.innerHTML = '<span class="status-dot" style="background:#f87171;"></span> 🔴 पुनः कनेक्ट हो रहा है...';
+        setTimeout(initWebSocket, 3000);
+      };
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('mode-t2s').className = mode === 't2s' ? 'btn btn-primary' : 'btn btn-secondary';
+      document.getElementById('mode-s2t').className = mode === 's2t' ? 'btn btn-primary' : 'btn btn-secondary';
+      document.getElementById('mode-twoway').className = mode === 'twoway' ? 'btn btn-success' : 'btn btn-secondary';
+    }
+
+    function handleWSMessage(msg) {
+      const eventType = msg.type || msg.event;
+
+      if (eventType === 'text_translation') {
+        if (msg.direction === 'teacher_to_student') {
+          document.getElementById('output-hindi').innerText = msg.transcription;
+          document.getElementById('output-santali').innerText = msg.translation;
+          
+          if (msg.devanagari || msg.latin) {
+            document.getElementById('output-santali-dev').innerText = msg.devanagari || '';
+            document.getElementById('output-santali-lat').innerText = msg.latin || '';
+          }
+          
+          document.getElementById('live-status').innerText = 'विद्यार्थी को भेजा जा रहा है...';
+        } else if (msg.direction === 'student_to_teacher') {
+          addFeedMessage('👨‍🎓 विद्यार्थी (संताली ➔ हिंदी)', msg.transcription, msg.translation);
+        }
+      } else if (eventType === 'voice_translation') {
+        if (msg.direction === 'teacher_to_student') {
+          document.getElementById('live-status').innerText = '✅ विद्यार्थी को भेजा गया (ऑडियो विद्यार्थी डिवाइस पर बज रहा है)';
+          document.getElementById('telemetry-badge').style.display = 'inline-block';
+          if (msg.latency_metrics) {
+            document.getElementById('telemetry-badge').innerText = `ASR: ${msg.latency_metrics.asr_time_seconds}s | Trans: ${msg.latency_metrics.translation_time_seconds}s | TTS: ${msg.latency_metrics.tts_time_seconds}s`;
+          }
+          addFeedMessage('👩‍🏫 शिक्षक (हिंदी ➔ संताली)', msg.transcription, msg.translation);
+        } else if (msg.direction === 'student_to_teacher' && msg.audio_base64) {
+          // Play Hindi response on Teacher device
+          window.bhashaAudioPlayer.playBase64Audio(msg);
+        }
+      }
+    }
+
+    function addFeedMessage(sender, text1, text2) {
+      const feed = document.getElementById('conversation-feed');
+      const card = document.createElement('div');
+      card.style.background = 'rgba(255,255,255,0.03)';
+      card.style.border = '1px solid var(--card-border)';
+      card.style.padding = '1rem';
+      card.style.borderRadius = '0.75rem';
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+          <span>${sender}</span>
+          <span>${new Date().toLocaleTimeString()}</span>
+        </div>
+        <div style="font-size: 1rem; font-weight: 600;">"${text1}"</div>
+        <div class="ol-chiki" style="color: #34d399; font-size: 1.1rem; margin-top: 0.25rem;">"${text2}"</div>
+      `;
+      feed.prepend(card);
+    }
+
+    async function toggleRecording() {
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const recOptions = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') 
+            ? { mimeType: 'audio/webm;codecs=opus' } 
+            : (MediaRecorder.isTypeSupported('audio/webm') ? { mimeType: 'audio/webm' } : {});
+          
+          mediaRecorder = new MediaRecorder(stream, recOptions);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = event => {
+            if (event.data.size > 0) audioChunks.push(event.data);
+          };
+
+          mediaRecorder.onstop = async () => {
+            const requestId = "req_" + Date.now() + "_" + Math.random().toString(36).substring(2, 7);
+            const recordedMime = mediaRecorder.mimeType || 'audio/webm';
+            const audioBlob = new Blob(audioChunks, { type: recordedMime });
+            
+            console.log(`[REQUEST_TRACE] request_id=${requestId} | 1. Raw mic recording complete | 2. Chunks=${audioChunks.length} | Total size=${audioBlob.size} bytes | MIME=${recordedMime}`);
+            document.getElementById('live-status').innerText = `वाक् पहचान जारी है ASR [${requestId}]...`;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(audioBlob);
+            reader.onloadend = () => {
+              const base64Audio = reader.result.split(',')[1];
+              document.getElementById('live-status').innerText = 'संताली में अनुवाद हो रहा है...';
+              
+              ws.send(JSON.stringify({
+                action: 'translate_audio',
+                request_id: requestId,
+                audio_base64: base64Audio,
+                source_language: 'hi',
+                target_language: 'sat',
+                direction: 'teacher_to_student',
+                room_code: roomCode,
+                mime_type: recordedMime,
+                voice_pack: document.getElementById('voicePackSelect')?.value || 'female_calm'
+              }));
+            };
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          const btn = document.getElementById('btn-mic');
+          btn.className = 'btn btn-primary mic-active';
+          btn.style.background = 'linear-gradient(135deg, #ef4444, #f59e0b)';
+          document.getElementById('mic-label').innerText = 'बोलना बंद करें';
+          document.getElementById('live-status').innerText = 'सुन रहा है... (हिंदी में बोलें)';
+        } catch(err) {
+          alert('माइक्रोफोन त्रुटि: ' + err.message + '\nकृपया HTTPS और ब्राउज़र माइक्रोफोन अनुमति की जाँच करें।');
+        }
+      } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        const btn = document.getElementById('btn-mic');
+        btn.className = 'btn btn-primary';
+        btn.style.background = 'linear-gradient(135deg, #4f46e5, #06b6d4)';
+        document.getElementById('mic-label').innerText = 'बोलने के लिए दबाएँ';
+      }
+    }
+
+    window.onload = () => {
+      initWebSocket();
+      window.bhashaAudioPlayer.renderDebugPanel();
+    };
+  </script>
+</body>
+</html>

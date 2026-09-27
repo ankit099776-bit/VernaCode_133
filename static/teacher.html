@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — शिक्षक डैशबोर्ड</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/static/i18n.js"></script>
+  <script src="/static/audioService.js"></script>
+  <script src="/static/auth.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/teacher" class="brand">
+      <div class="brand-icon">🌉</div>
+      <div>
+        <div data-i18n="app_name">भाषासेतु AI</div>
+        <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 400;" data-i18n="tagline">शिक्षक पोर्टल</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/teacher" class="nav-link active" data-i18n="nav.dashboard">डैशबोर्ड</a></li>
+      <li><a href="/teacher/classroom" class="nav-link" data-i18n="nav.live_classroom">लाइव कक्षा</a></li>
+      <li><a href="/attendance" class="nav-link" data-i18n="nav.attendance">उपस्थिति</a></li>
+      <li><a href="/progress" class="nav-link" data-i18n="nav.progress">सीखने की प्रगति</a></li>
+      <li><a href="/translator" class="nav-link" data-i18n="nav.translator">अनुवादक</a></li>
+      <li><a href="/flashcards" class="nav-link" data-i18n="nav.flashcards">फ्लैशकार्ड</a></li>
+      <li><div class="status-badge" data-i18n="status_online"><span class="status-dot"></span> ऑनलाइन</div></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800;" data-i18n="dashboard.greeting">सुप्रभात, शिक्षक 👋</h1>
+        <p style="color: var(--text-muted);" data-i18n="dashboard.subheading">कक्षा 2 (झारखंड प्राथमिक अनुभाग) | हिंदी ↔ संताली ओल चिकी</p>
+      </div>
+      <div style="display: flex; gap: 1rem;">
+        <a href="/teacher/classroom" class="btn btn-primary" data-i18n="dashboard.launch_classroom">🎤 लाइव कक्षा शुरू करें (BHASA-204)</a>
+      </div>
+    </div>
+
+    <!-- Dashboard Stat Cards Grid -->
+    <div class="grid-4" style="margin-bottom: 2rem;">
+      <div class="card">
+        <div style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;" data-i18n="dashboard.total_students">कुल विद्यार्थी</div>
+        <div style="font-size: 2.2rem; font-weight: 800; margin-top: 0.25rem;">28</div>
+        <div style="color: #34d399; font-size: 0.8rem; margin-top: 0.25rem;">नामांकित कक्षा 2</div>
+      </div>
+
+      <div class="card">
+        <div style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;" data-i18n="dashboard.present_today">आज उपस्थित</div>
+        <div style="font-size: 2.2rem; font-weight: 800; margin-top: 0.25rem; color: #34d399;">24 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">(85%)</span></div>
+        <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem;"><span class="tag-proto">डेमो डेटा</span></div>
+      </div>
+
+      <div class="card">
+        <div style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;" data-i18n="dashboard.concept_mastery">औसत अवधारणा समझ</div>
+        <div style="font-size: 2.2rem; font-weight: 800; margin-top: 0.25rem; color: var(--secondary);">82%</div>
+        <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem;">गणित व पर्यावरण अवधारणाएँ</div>
+      </div>
+
+      <div class="card">
+        <div style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;" data-i18n="dashboard.need_support">अतिरिक्त सहायता की आवश्यकता</div>
+        <div style="font-size: 2.2rem; font-weight: 800; margin-top: 0.25rem; color: var(--warning);">4</div>
+        <div style="color: var(--warning); font-size: 0.8rem; margin-top: 0.25rem;">भाषा सेतु अंतराल</div>
+      </div>
+    </div>
+
+    <!-- Analytics & Concept Mastery Section -->
+    <div class="grid-2" style="margin-bottom: 2rem;">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 data-i18n="dashboard.concept_vs_language">अवधारणा बनाम भाषा समझ</h3>
+          <span class="tag-proto">डेमो विश्लेषण</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;" data-i18n="dashboard.concept_desc">
+          विषय की गणितीय व वैज्ञानिक समझ को भाषा बोध से अलग करके विश्लेषित करें:
+        </p>
+        
+        <div style="margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem;">
+            <span data-i18n="dashboard.concept_score">अवधारणा समझ (विषय लॉजिक)</span>
+            <span style="color: #34d399;">82%</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px; overflow: hidden;">
+            <div style="width: 82%; background: #34d399; height: 100%;"></div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem;">
+            <span data-i18n="dashboard.language_score">भाषा समझ (हिंदी बोध)</span>
+            <span style="color: var(--warning);">61%</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px; overflow: hidden;">
+            <div style="width: 61%; background: var(--warning); height: 100%;"></div>
+          </div>
+        </div>
+
+        <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 1rem; border-radius: 0.75rem; margin-top: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700;">
+            <span data-i18n="dashboard.bridge_score">भाषा सेतु स्कोर</span>
+            <span style="font-size: 1.4rem; color: #818cf8;">72%</span>
+          </div>
+          <p style="font-size: 0.85rem; color: #c7d2fe; margin-top: 0.4rem;" data-i18n="dashboard.bridge_desc">
+            💡 "विद्यार्थी गणितीय/पर्यावरण अवधारणाओं को समझता है परंतु उत्तर व्यक्त करने हेतु संताली ओल चिकी भाषा सहायता की आवश्यकता है।"
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Teacher Actions -->
+      <div class="card">
+        <h3 style="margin-bottom: 1rem;">शिक्षक उपकरण व शॉर्टकट</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <a href="/teacher/classroom" class="btn btn-primary" style="justify-content: flex-start;">
+            🎤 <strong>लाइव दो-तरफा कक्षा</strong> — शिक्षक वाक् प्रसारण व संताली उत्तर ग्रहण
+          </a>
+          <a href="/attendance" class="btn btn-secondary" style="justify-content: flex-start;">
+            📋 <strong>कक्षा उपस्थिति</strong> — कक्षा 2 दैनंदिन उपस्थिति अंकन
+          </a>
+          <a href="/translator" class="btn btn-secondary" style="justify-content: flex-start;">
+            🔤 <strong>टेक्स्ट व वॉइस अनुवादक</strong> — त्वरित हिंदी ↔ संताली अनुवाद
+          </a>
+          <a href="/flashcards" class="btn btn-secondary" style="justify-content: flex-start;">
+            🃏 <strong>ओल चिकी फ्लैशकार्ड</strong> — कक्षा 2 शब्दावली व उच्चारण
+          </a>
+          <a href="/quizzes" class="btn btn-secondary" style="justify-content: flex-start;">
+            🎯 <strong>कक्षा 2 क्विज़</strong> — बहु-संवेदी शिक्षण गतिविधियाँ
+          </a>
+          <a href="/lessons" class="btn btn-secondary" style="justify-content: flex-start;">
+            📝 <strong>पाठ योजना उपकरण</strong> — AI पाठ व वर्कशीट सहायता
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — पाठ योजना व वर्कशीट उपकरण</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/auth.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/teacher" class="brand">
+      <div class="brand-icon">📝</div>
+      <div>
+        <div style="font-weight: 800;">भाषासेतु पाठ योजना</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">झारखण्ड प्राथमिक अनुभाग</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/teacher" class="nav-link">शिक्षक डैशबोर्ड</a></li>
+      <li><a href="/teacher/classroom" class="nav-link">लाइव कक्षा</a></li>
+      <li><a href="/attendance" class="nav-link">उपस्थिति</a></li>
+      <li><a href="/lessons" class="nav-link active">पाठ योजना</a></li>
+      <li><a href="/progress" class="nav-link">प्रगति</a></li>
+      <li><div class="status-badge"><span class="status-dot"></span> 🟢 ऑनलाइन</div></li>
+    </ul>
+  </nav>
+
+  <main class="container" style="max-width: 800px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800;">द्विभाषी पाठ योजना एवं वर्कशीट निर्माता</h1>
+        <p style="color: var(--text-muted);">कक्षा 2 के लिए हिंदी व संताली ओल चिकी (Ol Chiki ᱚᱞ ᱪᱤᱠᱤ) पाठ रूपरेखा तैयार करें</p>
+      </div>
+      <span class="tag-proto">AI पाठ जनरेटर</span>
+    </div>
+
+    <!-- Controls -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <div class="grid-3" style="margin-bottom: 1rem;">
+        <div>
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">कक्षा (Class)</label>
+          <select style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: #fff;">
+            <option>कक्षा 2 (Class 2)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">विषय (Subject)</label>
+          <select id="sel-subject" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: #fff;">
+            <option value="math">गणित (Mathematics / ᱞᱮᱠᱷᱟ)</option>
+            <option value="evs">पर्यावरण अध्ययन (EVS / ᱡᱤᱣᱤ)</option>
+            <option value="lang">मातृभाषा संताली (Vernacular Language)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">पाठ का विषय (Topic)</label>
+          <input type="text" id="inp-topic" value="1 से 5 तक गिनती ( ᱞᱮᱠᱷᱟ ᱢᱤᱫ ᱠᱷᱚᱱ ᱢᱚᱬᱮ ᱦᱟᱹᱵᱤᱡ )" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: #fff;">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="generateLesson()">✨ पाठ योजना तैयार करें (Generate Lesson Plan)</button>
+        <button class="btn btn-secondary" onclick="generateWorksheet()">📄 कार्यपत्रक तैयार करें (Generate Worksheet)</button>
+      </div>
+    </div>
+
+    <!-- Generated Lesson Output -->
+    <div class="card" style="padding: 2rem;">
+      <h3 style="margin-bottom: 1rem;">जनरेट की गई द्विभाषी पाठ योजना (AI Output)</h3>
+      <div id="lesson-output" style="background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 0.75rem; min-height: 200px; font-size: 1.05rem; line-height: 1.6;">
+        द्विभाषी कक्षा 2 शिक्षण रूपरेखा तैयार करने के लिए ऊपर <strong>"पाठ योजना तैयार करें"</strong> बटन पर क्लिक करें।
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function generateLesson() {
+      const topic = document.getElementById('inp-topic').value;
+      document.getElementById('lesson-output').innerHTML = `
+        <h4 style="color:var(--secondary); margin-bottom:0.5rem; font-size:1.2rem;">शिक्षण पाठ योजना: ${topic}</h4>
+        <p><strong>शिक्षण उद्देश्य (Learning Objective):</strong> विद्यार्थी हिंदी तथा संताली ओल चिकी ( Ol Chiki ᱚᱞ ᱪᱤᱠᱤ ) में 1 से 5 तक संख्याएँ पहचानना व गिनना सीखेंगे।</p>
+        <br>
+        <p><strong>द्विभाषी शिक्षण चरण (Bilingual Teaching Steps):</strong></p>
+        <ol style="margin-left: 1.5rem; margin-top:0.5rem;">
+          <li style="margin-bottom:0.4rem;"><strong>चरण 1:</strong> 1 सेब 🍎 दिखाएँ, हिंदी में बोलें <em>"एक"</em>, फिर संताली ओल चिकी में बोलें <em>"ᱢᱤᱫ (Mid)"</em>।</li>
+          <li style="margin-bottom:0.4rem;"><strong>चरण 2:</strong> 2 केले 🍌🍌 दिखाएँ, हिंदी में बोलें <em>"दो"</em>, फिर संताली ओल चिकी में बोलें <em>"ᱵᱟᱨ (Bar)"</em>।</li>
+          <li style="margin-bottom:0.4rem;"><strong>चरण 3:</strong> फ्लैशकार्ड का उपयोग करके सामूहिक गिनती गतिविधि कराएँ।</li>
+        </ol>
+      `;
+    }
+
+    function generateWorksheet() {
+      const topic = document.getElementById('inp-topic').value;
+      document.getElementById('lesson-output').innerHTML = `
+        <h4 style="color:#34d399; margin-bottom:0.5rem; font-size:1.2rem;">कक्षा कार्यपत्रक (Student Worksheet): ${topic}</h4>
+        <p><strong>हिंदी संख्या का संताली ओल चिकी से सही मिलान करें:</strong></p>
+        <ul style="list-style:none; margin-top:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
+          <li style="padding:0.75rem; background:rgba(255,255,255,0.05); border-radius:0.5rem;">1 (एक) ➔ ________ ( ᱢᱤᱫ )</li>
+          <li style="padding:0.75rem; background:rgba(255,255,255,0.05); border-radius:0.5rem;">2 (दो) ➔ ________ ( ᱵᱟᱨ )</li>
+          <li style="padding:0.75rem; background:rgba(255,255,255,0.05); border-radius:0.5rem;">3 (तीन) ➔ ________ ( ᱯᱮ )</li>
+        </ul>
+      `;
+    }
+  </script>
+</body>
+</html>

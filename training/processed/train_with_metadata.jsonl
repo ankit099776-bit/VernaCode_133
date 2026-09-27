@@ -1,0 +1,46 @@
+{"source": "पर्यावरण की रक्षा करना हमारा कर्तव्य है।", "target": "ᱯᱚᱨᱤᱵᱮᱥ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱟᱵᱚᱣᱟᱜ ᱠᱟᱹᱢᱤ ᱠᱟᱱᱟ᱾", "dataset_source": "education"}
+{"source": "फसल को कीटों से कैसे बचाएं?", "target": "ᱪᱟᱥ ᱡᱤᱣᱤ-ᱠᱤᱴ ᱠᱷᱚᱱ ᱪᱮᱫ ᱞᱮᱠᱟ ᱛᱮ ᱨᱩᱠᱷᱤᱭᱟᱹᱭᱟ?", "dataset_source": "agriculture"}
+{"source": "कंप्यूटर सीखना बहुत आसान है।", "target": "ᱠᱚᱢᱯᱭᱩᱴᱚᱨ ᱥᱮᱸᱲᱟᱭ ᱟᱹᱰᱤ ᱟᱞᱜᱟ ᱜᱮᱭᱟ᱾", "dataset_source": "education"}
+{"source": "जल ही जीवन है।", "target": "ᱫᱟᱜ ᱜᱮ ᱡᱤᱣᱤ ᱠᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "विद्यार्थी उत्तर लिख रहे हैं।", "target": "ᱪᱮᱛᱮᱫᱤᱭᱟᱹ ᱛᱮᱞᱟ ᱠᱚ ᱚᱞᱮᱫᱼᱟ᱾", "dataset_source": "education"}
+{"source": "सब मिलकर काम करेंगे।", "target": "ᱡᱚᱛᱚ ᱦᱚᱲ ᱢᱤᱫ ᱛᱮ ᱠᱟᱹᱢᱤ ᱵᱚᱱ ᱠᱚᱨᱟᱣᱼᱟ᱾", "dataset_source": "coild"}
+{"source": "पर्यावरण संरक्षण हमारी नैतिक जिम्मेदारी है।", "target": "ᱯᱚᱨᱤᱵᱮᱥ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱟᱵᱚᱣᱟᱜ ᱫᱷᱚᱨᱚᱢ ᱠᱟᱹᱢᱤ ᱠᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "जैविक खाद का उपयोग क्यों करना चाहिए?", "target": "ᱡᱮᱣᱤᱠ ᱠᱷᱟᱛᱟ ᱵᱮᱣᱦᱟᱨ ᱪᱮᱫ ᱞᱮᱠᱟ ᱛᱮ ᱞᱟᱹᱠᱛᱤᱭᱟ?", "dataset_source": "agriculture"}
+{"source": "धन्यवाद।", "target": "ᱥᱟᱹᱨᱦᱟᱣ᱾", "dataset_source": "coild"}
+{"source": "धन्यवाद।", "target": "ᱡᱚᱦᱟᱨ ᱥᱟᱹᱨᱦᱟᱣ᱾", "dataset_source": "education"}
+{"source": "स्वास्थ्य ही सबसे बड़ा धन है।", "target": "ᱞᱟ ᱥᱮᱣᱟ ᱜᱮ ᱢᱟᱨᱟᱝ ᱫᱷᱚᱱ ᱠᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "छात्रों को रोज़ स्कूल जाना चाहिए।", "target": "ᱪᱮᱛᱮᱫᱤᱭᱟᱹ ᱠᱚ ᱫᱤᱱᱟᱹᱢ ᱟᱥᱲᱟ ᱥᱮᱱᱚᱜ ᱞᱟᱹᱠᱛᱤᱭᱟ᱾", "dataset_source": "education"}
+{"source": "नमस्ते! आप कैसे हैं?", "target": "ᱡᱚᱦᱟᱨ, ᱟᱢ ᱪᱮᱫ ᱞᱮᱠᱟ ᱢᱮᱱᱟᱢ?", "dataset_source": "coild"}
+{"source": "नदी का पानी साफ़ है।", "target": "ᱜᱟᱰᱟ ᱨᱮᱱᱟᱜ ᱫᱟᱜ ᱯᱷᱟᱨᱪᱟ ᱜᱮᱭᱟ᱾", "dataset_source": "coild"}
+{"source": "अध्यापक ने सवाल पूछा।", "target": "ᱢᱟᱪᱮᱛ ᱠᱩᱠᱞᱤ ᱭᱮ ᱠᱩᱞᱤ ᱠᱮᱫᱼᱟ᱾", "dataset_source": "education"}
+{"source": "गणित में गिनती सीखना महत्वपूर्ण है।", "target": "ᱮᱞᱠᱷᱟ ᱨᱮ ᱞᱮᱠᱷᱟ ᱥᱮᱸᱲᱟᱭ ᱞᱟᱹᱠᱛᱤᱭᱟᱱᱟ᱾", "dataset_source": "education"}
+{"source": "भाषा से विचारों का आदान-प्रदान होता है।", "target": "ᱯᱟᱹᱨᱥᱤ ᱛᱮ ᱵᱷᱟᱵᱽ ᱮᱯᱮᱢ-ᱪᱟᱯᱮᱢᱚᱜᱼᱟ᱾", "dataset_source": "education"}
+{"source": "सवेरे उठकर टहलना स्वास्थ्य के लिए लाभदायक है।", "target": "ᱥᱮᱛᱟᱜ ᱵᱮᱨᱮᱫ ᱠᱟᱛᱮ ᱛᱟᱲᱟᱢ ᱞᱟ ᱥᱮᱣᱟ ᱞᱟᱹᱜᱤᱫ ᱱᱟᱯᱟᱭᱟ᱾", "dataset_source": "coild"}
+{"source": "समय बहुत मूल्यवान है।", "target": "ᱚᱠᱛᱚ ᱫᱚ ᱟᱹᱰᱤ ᱜᱚᱱᱚᱝᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "विद्यालय का प्रांगन साफ़ है।", "target": "ᱤᱛᱩᱱ ᱟᱥᱲᱟ ᱨᱮᱱᱟᱜ ᱨᱟᱪᱟ ᱯᱷᱟᱨᱪᱟ ᱜᱮᱭᱟ᱾", "dataset_source": "education"}
+{"source": "पुस्तकालय में कई तरह की किताबें हैं।", "target": "ᱯᱩᱛᱷᱤ ᱚᱲᱟᱜ ᱨᱮ ᱟᱭᱢᱟ ᱞᱮᱠᱟᱱ ᱯᱩᱛᱷᱤ ᱢᱮᱱᱟᱜᱼᱟ᱾", "dataset_source": "education"}
+{"source": "उर्वरक की सही मात्रा कैसे तय करें?", "target": "ᱠᱷᱟᱛᱟ ᱨᱮᱱᱟᱜ ᱥᱟᱹᱨᱤ ᱚᱱᱢᱟᱱ ᱪᱮᱫ ᱞᱮᱠᱟ ᱛᱮ ᱞᱮᱠᱷᱟᱭᱟ?", "dataset_source": "agriculture"}
+{"source": "पेड़ लगाना पर्यावरण के लिए अच्छा है।", "target": "ᱫᱟᱨᱮ ᱨᱚᱦᱚᱭ ᱯᱚᱨᱤᱵᱮᱥ ᱞᱟᱹᱜᱤᱫ ᱱᱟᱯᱟᱭᱟ᱾", "dataset_source": "coild"}
+{"source": "सूर्य पूर्व दिशा में उगता है।", "target": "ᱥᱤᱸᱜᱤ ᱥᱟᱢᱟᱝ ᱥᱮᱫ ᱮ ᱨᱟᱠᱟᱵᱼᱟ᱾", "dataset_source": "coild"}
+{"source": "सच्चाई की हमेशा जीत होती है।", "target": "ᱥᱟᱹᱨᱤᱭᱟᱹᱜ ᱜᱮ ᱡᱟᱣ ᱜᱮ ᱡᱤᱛᱠᱟᱹᱨᱚᱜᱼᱟ᱾", "dataset_source": "coild"}
+{"source": "कंप्यूटर ज्ञान आज के समय में आवश्यक है।", "target": "ᱠᱚᱢᱯᱭᱩᱴᱚᱨ ᱥᱮᱸᱲᱟ ᱛᱮᱦᱮᱧᱟᱜ ᱚᱠᱛᱚ ᱨᱮ ᱞᱟᱹᱠᱛᱤᱭᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "पढ़ाई से ज्ञान बढ़ता है।", "target": "ᱯᱟᱲᱦᱟᱣ ᱛᱮ Gyan ᱦᱟᱨᱟᱜᱼᱟ᱾", "dataset_source": "education"}
+{"source": "आज हम नया पाठ पढ़ेंगे।", "target": "ᱛᱮᱦᱮᱧ ᱟᱵᱚ ᱱᱟᱣᱟ ᱯᱟᱴᱷ ᱵᱚᱱ ᱯᱟᱲᱦᱟᱣᱼᱟ᱾", "dataset_source": "coild"}
+{"source": "किताब में सुंदर चित्र दिए गए हैं।", "target": "ᱯᱩᱛᱷᱤ ᱨᱮ ᱪᱚᱨᱚᱠ ᱪᱤᱛᱟᱹᱨ ᱮᱢ ᱟᱠᱟᱱᱟ᱾", "dataset_source": "education"}
+{"source": "विद्यार्थी ध्यान से सुन रहे हैं।", "target": "ᱪᱮᱛᱮᱫᱤᱭᱟᱹ ᱠᱚ ᱫᱷᱭᱟᱱ ᱛᱮ ᱠᱚ ᱟᱸᱡᱚᱢᱮᱫᱼᱟ᱾", "dataset_source": "coild"}
+{"source": "हमारा देश भारत है।", "target": "ᱟᱵᱚᱣᱟᱜ ᱫᱤᱥᱚᱢ ᱫᱚ ᱵᱷᱟᱨᱚᱛ ᱠᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "पेड़ पौधे हमें साफ़ हवा देते हैं।", "target": "ᱫᱟᱨᱮ ᱱᱟᱹᱲᱤ ᱟᱵᱚ ᱯᱷᱟᱨᱪᱟ ᱦᱚᱭ ᱮᱢᱟᱵᱚᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "कक्षा में अनुशासन बनाए रखें।", "target": "ᱠᱞᱟᱥ ᱨᱮ ᱱᱤᱭᱚᱢ ᱫᱚᱦᱚᱭ ᱢᱮ᱾", "dataset_source": "education"}
+{"source": "गेहूँ की बुवाई किस महीने में की जाती है?", "target": "ᱜᱮᱦᱩᱸ ᱨᱚᱦᱚᱭ ᱚᱠᱟ ᱪᱟᱸᱫᱚ ᱨᱮ ᱦᱩᱭᱩᱜᱼᱟ?", "dataset_source": "agriculture"}
+{"source": "मिश्रित देवनागरी संताली", "target": "ᱱᱚᱣᱟ ᱫᱚ देवनागरी ᱠᱟᱱᱟ᱾", "dataset_source": "coild"}
+{"source": "फसल चक्र अपनाने के क्या लाभ हैं?", "target": "ᱪᱟᱥ ᱯᱷᱮᱨᱟᱣ ᱨᱮᱱᱟᱜ ᱪᱮᱫ ᱞᱟᱵᱷ ᱢᱮᱱᱟᱜᱼᱟ?", "dataset_source": "agriculture"}
+{"source": "ईमानदारी से काम करने पर सफलता मिलती है।", "target": "ᱥᱟᱹᱨᱤ ᱥᱟᱹᱨᱤ ᱠᱟᱹᱢᱤ ᱞᱮᱨᱮ ᱡᱤᱛᱠᱟᱹᱨ ᱧᱟᱢᱚᱜᱼᱟ᱾", "dataset_source": "coild"}
+{"source": "अध्यापक ने कक्षा में सवाल पूछा।", "target": "ᱢᱟᱪᱮᱛ ᱠᱞᱟᱥ ᱨᱮ ᱠᱩᱠᱞᱤ ᱭᱮ ᱠᱩᱞᱤ ᱠᱮᱫᱼᱟ᱾", "dataset_source": "coild"}
+{"source": "परीक्षा की तैयारी अच्छे से करें।", "target": "ᱵᱤᱱᱤᱰ ᱨᱮᱱᱟᱜ ᱥᱟᱯᱲᱟᱣ ᱱᱟᱯᱟᱭ ᱛᱮ ᱠᱚᱨᱟᱣ ᱢᱮ᱾", "dataset_source": "education"}
+{"source": "मिट्टी की उर्वरता कैसे बढ़ाएं?", "target": "ᱦᱟᱥᱟ ᱨᱮᱱᱟᱜ ᱩᱨᱵᱚᱨᱚᱛᱟ ᱪᱮᱫ ᱞᱮᱠᱟ ᱛᱮ ᱦᱟᱨᱟᱣᱟ?", "dataset_source": "agriculture"}
+{"source": "शिक्षक बच्चों को पाठ समझाते हैं।", "target": "ᱢᱟᱪᱮᱛ ᱜᱤᱫᱽᱨᱟᱹ ᱠᱚ ᱯᱟᱴᱷ ᱮ ᱵᱩᱡᱷᱟᱹᱣ ᱟᱠᱚᱣᱟ᱾", "dataset_source": "education"}
+{"source": "पुस्तकालय में शांति बनाए रखें।", "target": "ᱯᱩᱛᱷᱤ ᱚᱲᱟᱜ ᱨᱮ ᱛᱷᱤᱨ ᱛᱟᱦᱮᱸᱱ ᱢᱮ᱾", "dataset_source": "coild"}
+{"source": "विज्ञान हमारे दैनिक जीवन से जुड़ा है।", "target": "ᱥᱟᱬᱮᱥ ᱟᱵᱚᱣᱟᱜ ᱫᱤᱱᱟᱹᱢ ᱡᱤᱣᱤ ᱥᱟᱶ ᱡᱚᱲᱟᱣ ᱢᱮᱱᱟᱜᱼᱟ᱾", "dataset_source": "education"}
+{"source": "सिंचाई का सही समय क्या है?", "target": "ᱫᱟᱜ ᱫᱩᱞ ᱨᱮᱱᱟᱜ ᱥᱟᱹᱨᱤ ᱚᱠᱛᱚ ᱪᱮᱫ ᱠᱟᱱᱟ?", "dataset_source": "agriculture"}
+{"source": "स्कूल में बच्चे पढ़ते हैं।", "target": "ᱤᱛᱩᱱ ᱟᱥᱲᱟ ᱨᱮ ᱜᱤᱫᱽᱨᱟᱹ ᱠᱚ ᱯᱟᱲᱦᱟᱣᱼᱟ᱾", "dataset_source": "coild"}
+{"source": "मेहनत से सफलता मिलती है।", "target": "ᱠᱩᱨᱩᱢᱩᱴᱩ ᱛᱮ ᱡᱤᱛᱠᱟᱹᱨ ᱧᱟᱢᱚᱜᱼᱟ᱾", "dataset_source": "coild"}

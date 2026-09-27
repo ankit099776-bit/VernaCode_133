@@ -1,0 +1,36 @@
+# Environment & Secrets
+.env
+.env.local
+*.key
+*.pem
+
+# Virtual Environments
+.venv/
+.venv*/
+venv/
+ENV/
+
+# Python Cache & Testing
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Audio Files & Generated Outputs
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Model Weights & HuggingFace Caches
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+.huggingface/
+.cache/

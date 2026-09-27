@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BhashaSetu AI — Vernacular Pedagogy Platform</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">🌉</div>
+      <div>
+        <div>BhashaSetu AI</div>
+        <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 400;">Class 2 Vernacular Pedagogy</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="nav-link active">Home</a></li>
+      <li><a href="/classroom" class="nav-link">Live Classroom</a></li>
+      <li><a href="/translator" class="nav-link">Translator</a></li>
+      <li><a href="/flashcards" class="nav-link">Flashcards</a></li>
+      <li><a href="/quizzes" class="nav-link">Quizzes</a></li>
+      <li><a href="/login" class="btn btn-primary" style="padding: 0.4rem 1rem;">Login</a></li>
+      <li><div class="status-badge"><span class="status-dot"></span> Online</div></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <section style="text-align: center; padding: 3rem 1rem;">
+      <div style="display: inline-block; padding: 0.4rem 1rem; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 9999px; color: #818cf8; font-weight: 600; font-size: 0.9rem; margin-bottom: 1.5rem;">
+        Jharkhand Tribal Education Initiative (Hindi ↔ Santali Ol Chiki)
+      </div>
+      <h1 style="font-size: 3rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Breaking Language Barriers in the Classroom
+      </h1>
+      <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 750px; margin: 0 auto 2.5rem;">
+        "Learning in the language children understand." AI-powered real-time voice translation and vernacular pedagogy connecting Hindi-speaking teachers with Santali-speaking students.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="/login?role=teacher" class="btn btn-primary btn-large">👩‍🏫 Teacher Login</a>
+        <a href="/login?role=student" class="btn btn-secondary btn-large">👨‍🎓 Student Login</a>
+        <a href="/classroom" class="btn btn-success btn-large">🎤 Enter Live Classroom</a>
+      </div>
+    </section>
+
+    <!-- Visual Architecture Diagram -->
+    <section class="card" style="margin: 2rem 0; padding: 2.5rem; text-align: center; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);">
+      <h3 style="font-size: 1.3rem; margin-bottom: 2rem; color: var(--secondary);">Two-Way Real-Time Voice Translation Flow</h3>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 1.5rem;">
+        <div style="flex: 1; min-width: 220px; background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--card-border);">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎤</div>
+          <div style="font-weight: 700;">Teacher Device</div>
+          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem;">Speaks Hindi ("बच्चों, आज हम गिनती सीखेंगे।")</div>
+        </div>
+        <div style="font-size: 1.8rem; color: var(--secondary);">➔</div>
+        <div style="flex: 1; min-width: 220px; background: rgba(79, 70, 229, 0.15); padding: 1.5rem; border-radius: 1rem; border: 1px solid rgba(79, 70, 229, 0.3);">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡ Sarvam AI + AI4Bharat</div>
+          <div style="font-weight: 700;">BhashaSetu AI Engine</div>
+          <div style="font-size: 0.85rem; color: #a5b4fc; margin-top: 0.25rem;">ASR ➔ NMT ➔ TTS (&lt;3s Text, Progressive Audio)</div>
+        </div>
+        <div style="font-size: 1.8rem; color: var(--secondary);">➔</div>
+        <div style="flex: 1; min-width: 220px; background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--card-border);">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔊</div>
+          <div style="font-weight: 700;">Student Device</div>
+          <div style="font-size: 0.9rem; color: #34d399; margin-top: 0.25rem;">Hears Santali Ol Chiki ("ᱜᱤᱫᱽᱨᱟᱹ ᱠᱚ, ᱛᱮᱦᱮᱧ ᱟᱵᱚ...")</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Cards Grid -->
+    <section style="margin-top: 3rem;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">Platform Features</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎤</div>
+          <h3 style="margin-bottom: 0.5rem;">Real-Time Voice Translation</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Two-way real-time voice translation over local classroom network with sub-3s text streaming.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">📚</div>
+          <h3 style="margin-bottom: 0.5rem;">Vernacular Pedagogy</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Bridge mother-tongue Santali with Hindi curriculum for primary school foundation learning.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🧠</div>
+          <h3 style="margin-bottom: 0.5rem;">Concept Mastery Analytics</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Separate concept understanding from language comprehension with Language Bridge Score.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🃏</div>
+          <h3 style="margin-bottom: 0.5rem;">Smart Ol Chiki Flashcards</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Interactive visual flashcards with authentic Santali Ol Chiki script and audio pronunciation.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎯</div>
+          <h3 style="margin-bottom: 0.5rem;">Adaptive Quizzes</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Child-friendly Class 2 quizzes with multi-sensory audio and visual questions.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">📊</div>
+          <h3 style="margin-bottom: 0.5rem;">Teacher Analytics & Attendance</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Real-time student progress tracking, attendance logging, and support alerts.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

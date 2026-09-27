@@ -1,0 +1,46 @@
+{
+  "app_name": "ᱵᱷᱟᱥᱟᱥᱮᱛᱩ AI",
+  "tagline": "ᱜᱤᱫᱽᱨᱟᱹ ᱠᱚᱣᱟᱜ ᱟᱭᱳ ᱟᱲᱟᱝ ᱛᱮ ᱥᱮᱪᱮᱫ",
+  "status_online": "🟢 ᱚᱱᱞᱟᱭᱤᱱ",
+  "status_offline": "🔴 ᱡᱚᱲᱟᱣ ᱵᱟᱹᱱᱩᱜᱼᱟ",
+  "status_connecting": "🟡 ᱡᱚᱲᱟᱣᱚᱜ ᱠᱟᱱᱟ...",
+  "enable_audio": "🔊 ᱟᱲᱟᱝ ᱪᱟᱹᱞᱩᱭ ᱢᱮ",
+  "enable_audio_desc": "ᱢᱟᱪᱮᱛᱟᱜ ᱥᱟᱱᱛᱟᱲᱤ ᱟᱲᱟᱝ ᱟᱸᱡᱚᱢ ᱞᱟᱹᱜᱤᱫ ᱱᱚᱸᱰᱮ ᱞᱤᱱ ᱢᱮ ᱾",
+  "nav": {
+    "home": "ᱚᱲᱟᱜ",
+    "live_classroom": "ᱞᱟᱭᱤᱵᱽ ᱠᱞᱟᱥ",
+    "flashcards": "ᱯᱷᱞᱮᱥᱠᱟᱨᱰ",
+    "quizzes": "ᱠᱩᱠᱞᱤ",
+    "progress": "ᱤᱧᱟᱜ ᱞᱟᱦᱟᱱᱛᱤ"
+  },
+  "dashboard": {
+    "greeting": " ᱡᱚᱦᱟᱨ ! Johar! 👋",
+    "student_name": "ᱥᱩᱢᱤᱛᱨᱟ ᱦᱮᱢᱵᱽᱨᱚᱢ (Sumitra Hembram)",
+    "class_info": " దోᱥᱟᱨ ᱪᱟᱱᱟᱪ (Class 2 Santali Medium)",
+    "room_code": "ᱠᱞᱟᱥ ᱠᱳᱰ:",
+    "today_activities": "ᱛᱮᱦᱮᱧᱟᱜ ᱥᱮᱪᱮᱫ ᱠᱟᱹᱢᱤᱠᱚ",
+    "live_class_card": "🎤 ᱞᱟᱭᱤᱵᱽ ᱠᱞᱟᱥ",
+    "live_class_desc": "ᱢᱟᱪᱮᱛ ᱥᱟᱶ ᱥᱟᱱᱛᱟᱲᱤ ᱛᱮ ᱨᱚᱲ ᱢᱮ ᱾",
+    "flashcard_card": "🃏 ᱚᱞ ᱪᱤᱠᱤ ᱯᱷᱞᱮᱥᱠᱟᱨᱰ",
+    "flashcard_desc": "ᱡᱤᱣᱤᱭᱟᱹᱞᱤ, ᱞᱮᱠᱷᱟ ᱟᱨ ᱟᱹᱲᱟᱹ ᱠᱚ ᱪᱮᱫᱚᱜ ᱢᱮ ᱾",
+    "quiz_card": "🧠 ᱠᱩᱠᱞᱤ ᱠᱷᱮᱞ",
+    "quiz_desc": "ᱞᱮᱠᱷᱟ ᱟᱨ ᱪᱤᱛᱟᱹᱨ ᱠᱩᱠᱞᱤ ᱠᱚ ᱾",
+    "translator_card": "📚 ᱟᱹᱲᱟᱹ ᱛᱚᱨᱡᱚᱢᱟ",
+    "translator_desc": "ᱦᱤᱱᱫᱤ ᱠᱷᱚᱱ ᱥᱟᱱᱛᱟᱲᱤ ᱚᱞ ᱪᱤᱠᱤ ᱾",
+    "progress_card": "🌟 ᱤᱧᱟᱜ ᱞᱟᱦᱟᱱᱛᱤ",
+    "progress_desc": "ᱤᱯᱤᱞ ᱟᱨ ᱥᱤᱨᱯᱷᱟᱹ ᱠᱚ ᱧᱮᱞ ᱢᱮ ᱾"
+  },
+  "classroom": {
+    "title": "ᱞᱟᱭᱤᱵᱽ ᱠᱞᱟᱥ",
+    "teacher_speaking": "👩‍🏫 ᱢᱟᱪᱮᱛ ᱮ ᱨᱚᱲᱮᱫᱟ...",
+    "playing": "🔊 ᱟᱸᱡᱚᱢᱚᱜ ᱠᱟᱱᱟ...",
+    "waiting": "( ᱡᱚᱦᱟᱨ ! ᱢᱟᱪᱮᱛᱟᱜ ᱨᱚᱲ ᱞᱟᱹᱜᱤᱫ ᱛᱟᱺᱜᱤ ᱨᱮ... )",
+    "speak_to_teacher": "ᱢᱟᱪᱮᱛ ᱴᱷᱮᱱ ᱨᱚᱲ ᱢᱮ",
+    "speak_btn": "🎤 ᱥᱟᱱᱛᱟᱲᱤ ᱛᱮ ᱨᱚᱲ ᱢᱮ",
+    "recording": "ᱚᱞᱚᱜ ᱠᱟᱱᱟ... (ᱥᱟᱱᱛᱟᱲᱤ ᱛᱮ ᱨᱚᱲ ᱢᱮ)",
+    "transcribing": "ᱥᱟᱱᱛᱟᱲᱤ ᱟᱲᱟᱝ ᱚᱞᱚᱜ ᱠᱟᱱᱟ (ASR)...",
+    "translating": "ᱦᱤᱱᱫᱤ ᱛᱮ ᱛᱚᱨᱡᱚᱢᱟᱜ ᱠᱟᱱᱟ...",
+    "sending": "ᱢᱟᱪᱮᱛ ᱴᱷᱮᱱ ᱵᱷᱮᱡᱟᱜ ᱠᱟᱱᱟ...",
+    "sent": "✅ ᱢᱟᱪᱮᱛ ᱴᱷᱮᱱ ᱵᱷᱮᱡᱟᱭᱮᱱᱟ"
+  }
+}

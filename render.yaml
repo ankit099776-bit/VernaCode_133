@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: bhashasetu-ai
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "pip install -r requirements.txt && cd frontend && npm install && npm run build"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PIPELINE_MODE
+        value: online
+      - key: ASR_PROVIDER
+        value: sarvam
+      - key: TRANSLATION_PROVIDER
+        value: sarvam
+      - key: TTS_PROVIDER
+        value: bhashini
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: BHASHINI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

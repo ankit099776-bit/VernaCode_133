@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — दैनिक कक्षा उपस्थिति</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/auth.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/teacher" class="brand">
+      <div class="brand-icon">📋</div>
+      <div>
+        <div style="font-weight: 800;">भाषासेतु उपस्थिति</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">झारखण्ड प्राथमिक अनुभाग</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/teacher" class="nav-link">शिक्षक डैशबोर्ड</a></li>
+      <li><a href="/teacher/classroom" class="nav-link">लाइव कक्षा</a></li>
+      <li><a href="/attendance" class="nav-link active">उपस्थिति</a></li>
+      <li><a href="/lessons" class="nav-link">पाठ योजना</a></li>
+      <li><a href="/progress" class="nav-link">प्रगति</a></li>
+      <li><div class="status-badge"><span class="status-dot"></span> 🟢 ऑनलाइन</div></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800;">कक्षा 2 दैनिक उपस्थिति पंजी</h1>
+        <p style="color: var(--text-muted);">झारखण्ड प्राथमिक अनुभाग | दिनांक: <span id="current-date"></span></p>
+      </div>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <span class="tag-proto">कक्षा 2 (संथाली माध्यम)</span>
+        <button class="btn btn-primary" onclick="alert('उपस्थिति सफलतापूर्वक सहेजी गई!')">💾 उपस्थिति सहेजें</button>
+      </div>
+    </div>
+
+    <!-- Attendance Table -->
+    <div class="card" style="padding: 1.5rem; overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">
+            <th style="padding: 0.75rem;">क्रमांक (Roll)</th>
+            <th style="padding: 0.75rem;">विद्यार्थी का नाम</th>
+            <th style="padding: 0.75rem;">मातृभाषा / लिपि</th>
+            <th style="padding: 0.75rem;">उपस्थिति स्थिति</th>
+            <th style="padding: 0.75rem; text-align: center;">कार्रवाई</th>
+          </tr>
+        </thead>
+        <tbody id="attendance-tbody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('current-date').innerText = new Date().toLocaleDateString('hi-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    const studentList = [
+      { roll: "201", name: "सुमित्रा हेम्ब्रम (Sumitra Hembram)", lang: "संथाली (ᱚᱞ ᱪིᱠᱤ)", present: true },
+      { roll: "202", name: "रमेश मरांडी (Ramesh Marandi)", lang: "संथाली (ᱚᱞ ᱪིᱠᱤ)", present: true },
+      { roll: "203", name: "पूजा सोरेन (Pooja Soren)", lang: "संथाली (ᱚᱞ ᱪིᱠᱤ)", present: true },
+      { roll: "204", name: "सुनील मुर्मू (Sunil Murmu)", lang: "संथाली (ᱚᱞ ᱪིᱠᱤ)", present: false },
+      { roll: "205", name: "अनीश टुडू (Anish Tudu)", lang: "संथाली (ᱚᱞ ᱪིᱠᱤ)", present: true },
+      { roll: "206", name: "मंजू बेसरा (Manju Besra)", lang: "संथाली (ᱚᱞ ᱪིᱠᱤ)", present: true },
+      { roll: "207", name: "विक्रम हांसदा (Vikram Hansda)", lang: "संथाली (ᱚᱞ ᱪིᱠᱤ)", present: false },
+      { roll: "208", name: "कविता बास्के (Kavita Baskey)", lang: "संथाली (ᱚᱞ ᱪིᱠᱤ)", present: true }
+    ];
+
+    function renderTable() {
+      const tbody = document.getElementById('attendance-tbody');
+      tbody.innerHTML = '';
+      studentList.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+        tr.innerHTML = `
+          <td style="padding: 1rem; font-weight: 700;">#${s.roll}</td>
+          <td style="padding: 1rem; font-weight: 600;">${s.name}</td>
+          <td style="padding: 1rem; color: #a5b4fc;">${s.lang}</td>
+          <td style="padding: 1rem;">
+            ${s.present ? '<span class="status-badge" style="background:rgba(16,185,129,0.2); color:#34d399;">उपस्थित</span>' : '<span class="status-badge" style="background:rgba(239,68,68,0.2); color:#f87171;">अनुपस्थित</span>'}
+          </td>
+          <td style="padding: 1rem; text-align: center;">
+            <button class="btn ${s.present ? 'btn-secondary' : 'btn-success'}" style="padding:0.3rem 0.75rem; font-size:0.8rem;" onclick="toggleStatus('${s.roll}')">
+              ${s.present ? 'अनुपस्थित दर्ज करें' : 'उपस्थित दर्ज करें'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toggleStatus(roll) {
+      const student = studentList.find(s => s.roll === roll);
+      if (student) {
+        student.present = !student.present;
+        renderTable();
+      }
+    }
+
+    window.onload = renderTable;
+  </script>
+</body>
+</html>

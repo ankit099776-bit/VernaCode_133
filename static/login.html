@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — प्रवेश द्वार (Login & Credentials Portal)</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/login" class="brand">
+      <div class="brand-icon">🌉</div>
+      <div>
+        <div style="font-weight: 800;">भाषासेतु AI</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">सुरक्षित कक्षा प्रवेश द्वार</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><div class="status-badge"><span class="status-dot"></span> 🟢 सर्वर सक्रिय (Online)</div></li>
+    </ul>
+  </nav>
+
+  <main class="container" style="max-width: 520px; padding-top: 2rem;">
+    <div class="card" style="padding: 2.25rem;">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.6rem; font-weight: 800;">कक्षा प्रवेश द्वार (Login Required)</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">
+          शिक्षक व विद्यार्थी प्रवेश हेतु अपनी आईडी व पासवर्ड दर्ज करें
+        </p>
+      </div>
+
+      <!-- Role Selector Tabs -->
+      <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+        <button type="button" id="btn-role-teacher" class="btn btn-primary" style="flex: 1;" onclick="setRole('teacher')">👩‍🏫 शिक्षक (Teacher)</button>
+        <button type="button" id="btn-role-student" class="btn btn-secondary" style="flex: 1;" onclick="setRole('student')">👨‍🎓 ᱪᱮᱛᱮᱫᱤᱭᱟᱹ (Student)</button>
+      </div>
+
+      <!-- Error / Success Alert Box -->
+      <div id="login-alert" style="display: none; padding: 0.75rem 1rem; border-radius: 0.5rem; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.25rem;"></div>
+
+      <!-- Form for Teacher (Hindi) -->
+      <form id="form-teacher" onsubmit="handleLogin(event, 'teacher')">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem;">शिक्षक आईडी / ईमेल (Teacher ID) *</label>
+          <input type="text" id="teacher-id" value="teacher@bhashasetu.edu.in" required style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--card-border); background: rgba(0,0,0,0.3); color: #fff;">
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem;">पासवर्ड (Password) *</label>
+          <input type="password" id="teacher-password" value="teacher123" required style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--card-border); background: rgba(0,0,0,0.3); color: #fff;">
+        </div>
+
+        <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #a5b4fc;">
+          💡 <strong>शिक्षक परीक्षण क्रेडेंशियल:</strong><br>
+          • आईडी: <code>teacher@bhashasetu.edu.in</code><br>
+          • पासवर्ड: <code>teacher123</code>
+        </div>
+
+        <button type="submit" id="btn-submit-teacher" class="btn btn-primary" style="width: 100%;">शिक्षक डैशबोर्ड में प्रवेश करें ➔</button>
+      </form>
+
+      <!-- Form for Student (Santhali Ol Chiki) -->
+      <form id="form-student" onsubmit="handleLogin(event, 'student')" style="display: none;">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem;"><ctrl42> ᱪᱮᱛᱮᱫᱤᱭᱟᱹ ᱧᱩᱛᱩᱢ / आईडी (Student Name/ID) *</label>
+          <input type="text" id="student-id" value="student@bhashasetu.edu.in" required style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--card-border); background: rgba(0,0,0,0.3); color: #fff;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem;">🔑 पासवर्ड / पिन (Password / PIN) *</label>
+          <input type="password" id="student-password" value="student123" required style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--card-border); background: rgba(0,0,0,0.3); color: #fff;">
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem;">🏫 ᱠᱞᱟᱥ ᱠᱳᱰ (कक्षा कोड) *</label>
+          <input type="text" id="student-room-code" value="BHASA-204" required style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--card-border); background: rgba(0,0,0,0.3); color: #34d399; font-weight: 700;">
+        </div>
+
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #34d399;">
+          💡 <strong>विद्यार्थी परीक्षण क्रेडेंशियल:</strong><br>
+          • आईडी: <code>student@bhashasetu.edu.in</code> (या <code>Sumitra Hembram</code>)<br>
+          • पासवर्ड: <code>student123</code> (या <code>1234</code>) | कोड: <code>BHASA-204</code>
+        </div>
+
+        <button type="submit" id="btn-submit-student" class="btn btn-success" style="width: 100%;">ᱠᱞᱟᱥ ᱨᱮ ᱵᱚᱞᱚᱱ ᱢᱮ ➔ (कक्षा में प्रवेश करें)</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="/static/auth.js"></script>
+  <script>
+    let activeRole = 'teacher';
+
+    function setRole(role) {
+      activeRole = role;
+      hideAlert();
+      if (role === 'teacher') {
+        document.getElementById('btn-role-teacher').className = 'btn btn-primary';
+        document.getElementById('btn-role-student').className = 'btn btn-secondary';
+        document.getElementById('form-teacher').style.display = 'block';
+        document.getElementById('form-student').style.display = 'none';
+      } else {
+        document.getElementById('btn-role-teacher').className = 'btn btn-secondary';
+        document.getElementById('btn-role-student').className = 'btn btn-primary';
+        document.getElementById('form-teacher').style.display = 'none';
+        document.getElementById('form-student').style.display = 'block';
+      }
+    }
+
+    function showAlert(msg, isError = true) {
+      const box = document.getElementById('login-alert');
+      box.style.display = 'block';
+      if (isError) {
+        box.style.background = 'rgba(239, 68, 68, 0.2)';
+        box.style.border = '1px solid #f87171';
+        box.style.color = '#f87171';
+      } else {
+        box.style.background = 'rgba(16, 185, 129, 0.2)';
+        box.style.border = '1px solid #34d399';
+        box.style.color = '#34d399';
+      }
+      box.innerText = msg;
+    }
+
+    function hideAlert() {
+      document.getElementById('login-alert').style.display = 'none';
+    }
+
+    async function handleLogin(e, role) {
+      e.preventDefault();
+      hideAlert();
+
+      const username = role === 'teacher' 
+        ? document.getElementById('teacher-id').value 
+        : document.getElementById('student-id').value;
+        
+      const password = role === 'teacher' 
+        ? document.getElementById('teacher-password').value 
+        : document.getElementById('student-password').value;
+
+      const roomCode = document.getElementById('student-room-code')?.value || 'BHASA-204';
+
+      const btn = role === 'teacher' ? document.getElementById('btn-submit-teacher') : document.getElementById('btn-submit-student');
+      btn.innerText = 'प्रामाणीकरण जारी है...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/v1/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            role: role,
+            username: username,
+            password: password,
+            room_code: roomCode
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.status === 'success') {
+          showAlert('✅ प्रवेश सफल! कक्षा में ले जाया जा रहा है...', false);
+          
+          if (window.bhashaAuth) {
+            window.bhashaAuth.saveAuth(data, true);
+          }
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectUrl = urlParams.get('redirect') || data.redirect_url;
+          
+          setTimeout(() => {
+            window.location.href = redirectUrl;
+          }, 400);
+        } else {
+          showAlert('❌ ' + (data.detail || 'अमान्य क्रेडेंशियल! कृपया पासवर्ड की जाँच करें।'));
+          btn.disabled = false;
+          btn.innerText = role === 'teacher' ? 'शिक्षक डैशबोर्ड में प्रवेश करें ➔' : 'ᱠᱞᱟᱥ ᱨᱮ ᱵᱚᱞᱚᱱ ᱢᱮ ➔ (कक्षा में प्रवेश करें)';
+        }
+      } catch(err) {
+        showAlert('❌ सर्वर कनेक्शन त्रुटि: ' + err.message);
+        btn.disabled = false;
+        btn.innerText = role === 'teacher' ? 'शिक्षक डैशबोर्ड में प्रवेश करें ➔' : 'ᱠᱞᱟᱥ ᱨᱮ ᱵᱚᱞᱚᱱ ᱢᱮ ➔ (कक्षा में प्रवेश करें)';
+      }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('role') === 'student') {
+      setRole('student');
+    }
+  </script>
+</body>
+</html>

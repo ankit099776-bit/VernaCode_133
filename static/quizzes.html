@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — कक्षा 2 क्विज़ ( ᱠᱩᱠᱞᱤ ᱠᱷᱮᱞ )</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/auth.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">🧠</div>
+      <div>
+        <div style="font-weight: 800;">भाषासेतु क्विज़ ( ᱠᱩᱠᱞᱤ )</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">कक्षा 2 शिक्षण गतिविधियाँ</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/student" class="nav-link">ᱚᱲᱟᱜ (Student Home)</a></li>
+      <li><a href="/teacher" class="nav-link">शिक्षक (Teacher)</a></li>
+      <li><a href="/flashcards" class="nav-link">ᱯᱷᱞᱮᱥᱠᱟᱨᱰ (Flashcards)</a></li>
+      <li><a href="/quizzes" class="nav-link active">ᱠᱩᱠᱞᱤ (Quizzes)</a></li>
+      <li><div class="status-badge"><span class="status-dot"></span> 🟢 ऑनलाइन</div></li>
+    </ul>
+  </nav>
+
+  <main class="container" style="max-width: 750px;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h1 style="font-size: 2rem; font-weight: 800;">कक्षा 2 शिक्षण क्विज़ ( ᱠᱩᱠᱞᱤ ᱠᱷᱮᱞ )</h1>
+      <p style="color: var(--text-muted);">द्विभाषी गणित, पर्यावरण व संताली ओल चिकी (Ol Chiki ᱚᱞ ᱪᱤᱠᱤ) प्रश्न</p>
+    </div>
+
+    <!-- Quiz Question Container -->
+    <div class="card" style="padding: 2.5rem; margin-bottom: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <span id="quiz-subject" class="tag-proto">गणित ( ᱞᱮᱠᱷᱟ )</span>
+        <span id="quiz-progress-text" style="font-size: 0.9rem; color: var(--text-muted);">प्रश्न 1 का 3</span>
+      </div>
+
+      <h2 id="quiz-question" style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.4;">
+        क्विज़ प्रश्न लोड हो रहा है...
+      </h2>
+
+      <div id="quiz-options" style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <!-- Option buttons generated dynamically -->
+      </div>
+
+      <div id="quiz-feedback" style="display: none; padding: 1rem; border-radius: 0.75rem; font-weight: 700; margin-top: 1rem;">
+        <!-- Correct / Incorrect feedback -->
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between;">
+      <button class="btn btn-secondary" onclick="loadQuizzes()">🔄 क्विज़ पुनः शुरू करें ( ᱟᱹᱨᱩᱭ ᱢᱮ )</button>
+      <button id="btn-next-q" class="btn btn-primary" style="display: none;" onclick="nextQuestion()">अगला प्रश्न ➔ ( ᱞᱟᱦᱟ ᱠᱩᱠᱞᱤ )</button>
+    </div>
+  </main>
+
+  <script>
+    let questions = [];
+    let qIndex = 0;
+
+    async function loadQuizzes() {
+      try {
+        const res = await fetch('/api/v1/quizzes');
+        questions = await res.json();
+        qIndex = 0;
+        renderQuestion();
+      } catch(e) {
+        console.error('Quiz load error:', e);
+      }
+    }
+
+    function renderQuestion() {
+      if (!questions.length) return;
+      const q = questions[qIndex];
+      document.getElementById('quiz-subject').innerText = `${q.subject} — ${q.topic}`;
+      document.getElementById('quiz-progress-text').innerText = `प्रश्न ${qIndex + 1} का ${questions.length}`;
+      document.getElementById('quiz-question').innerText = q.question;
+      document.getElementById('quiz-feedback').style.display = 'none';
+      document.getElementById('btn-next-q').style.display = 'none';
+
+      const optionsBox = document.getElementById('quiz-options');
+      optionsBox.innerHTML = '';
+
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-secondary';
+        btn.style.textAlign = 'left';
+        btn.style.justifyContent = 'flex-start';
+        btn.style.padding = '1rem 1.25rem';
+        btn.style.fontSize = '1.1rem';
+        btn.innerText = opt;
+        btn.onclick = () => selectOption(opt, q.correct_answer, q.explanation);
+        optionsBox.appendChild(btn);
+      });
+    }
+
+    function selectOption(selected, correct, explanation) {
+      const fb = document.getElementById('quiz-feedback');
+      fb.style.display = 'block';
+
+      if (selected === correct) {
+        fb.style.background = 'rgba(16, 185, 129, 0.2)';
+        fb.style.border = '1px solid #34d399';
+        fb.style.color = '#34d399';
+        fb.innerHTML = `✓ सही उत्तर! ( ᱥᱟᱹᱨᱤ ᱜᱮᱭᱟ! 🎉 )<br><span style="font-size:0.9rem; font-weight:400; color:#fff;">${explanation}</span>`;
+      } else {
+        fb.style.background = 'rgba(239, 68, 68, 0.2)';
+        fb.style.border = '1px solid #f87171';
+        fb.style.color = '#f87171';
+        fb.innerHTML = `✕ पुन: प्रयास करें! सही उत्तर: ${correct}<br><span style="font-size:0.9rem; font-weight:400; color:#fff;">${explanation}</span>`;
+      }
+
+      document.getElementById('btn-next-q').style.display = 'inline-flex';
+    }
+
+    function nextQuestion() {
+      if (qIndex < questions.length - 1) {
+        qIndex++;
+        renderQuestion();
+      } else {
+        alert('🎉 क्विज़ पूर्ण हुआ! शाबाश! ( ᱠᱩᱠᱞᱤ ᱯᱩᱨᱟᱹᱣᱮᱱᱟ! )');
+        loadQuizzes();
+      }
+    }
+
+    window.onload = loadQuizzes;
+  </script>
+</body>
+</html>

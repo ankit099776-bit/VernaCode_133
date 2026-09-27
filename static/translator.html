@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — पाठ, कविता व कहानी अनुवादक | Hindi <-> Santali Text Translator</title>
+
+  <!-- Tailwind CSS CDN for utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- BhashaSetu Custom Design CSS & Auth Guard -->
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/auth.js"></script>
+  <style>
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    .tab-btn.inactive {
+      background: rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .tab-btn.inactive:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body class="selection:bg-emerald-600 selection:text-white">
+
+  <!-- Tribal Top Accent Line -->
+  <div class="tribal-pattern-border"></div>
+
+  <!-- Warning Banner for file:/// protocol -->
+  <div id="protocolWarning" class="hidden bg-amber-600 text-white text-xs sm:text-sm font-semibold py-2.5 px-4 text-center shadow-md">
+    <span>⚠️ <strong>सावधानी:</strong> आप पृष्ठ को फ़ाइल (file://) मोड में देख रहे हैं। माइक व API सर्वर से चलते हैं। कृपया </span>
+    <a href="http://localhost:8000" class="underline bg-white/20 px-2 py-0.5 rounded hover:bg-white/30 ml-1">http://localhost:8000 खोलें</a>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">🌉</div>
+      <div>
+        <div style="font-weight: 800;">भाषासेतु AI</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">झारखण्ड पाठ व वाक् अनुवादक</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="nav-link">होम</a></li>
+      <li><a href="/teacher" class="nav-link">शिक्षक (Hindi)</a></li>
+      <li><a href="/student" class="nav-link font-olchiki">ᱪᱮᱛᱮᱫᱤᱭᱟᱹ (Santali)</a></li>
+      <li><a href="/translator" class="nav-link active">अनुवादक</a></li>
+      <li><a href="/flashcards" class="nav-link">फ्लैशकार्ड</a></li>
+      <li><a href="/quizzes" class="nav-link">क्विज़</a></li>
+      <li>
+        <div class="status-badge">
+          <span class="status-dot"></span> 🟢 ऑनलाइन (ONLINE)
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="main-wrapper">
+
+    <!-- Header Banner -->
+    <div class="mb-5 text-center">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-stone-100 tracking-tight">
+        द्विभाषी पाठ, कविता व कहानी अनुवादक (Hindi ↔ <span class="text-emerald-400 font-olchiki">ᱥᱟᱱᱛᱟᱲᱤ</span>)
+      </h1>
+      <p class="mt-1 text-sm text-stone-400 max-w-2xl mx-auto">
+        हिंदी ↔ संताली ओल चिकी (Ol Chiki ᱚᱞ ᱪᱤᱠᱤ) शुद्ध पाठ अनुवाद, कविता/कहानी रूपांतरण एवं दस्तावेज़ अनुवाद।
+      </p>
+    </div>
+
+    <!-- Translator Mode Selector Tabs -->
+    <div class="flex justify-center gap-3 mb-6 flex-wrap">
+      <button id="tab-text-mode" class="tab-btn active" onclick="switchTranslatorTab('text')">
+        📝 शुद्ध पाठ व कविता/कहानी अनुवादक (Pure Text Mode)
+      </button>
+      <button id="tab-voice-mode" class="tab-btn inactive" onclick="switchTranslatorTab('voice')">
+        🎙️ वाक् अनुवादक (Voice Mode)
+      </button>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- MODE 1: PURE TEXT & POEM / STORY TRANSLATOR (NO AUDIO REQUIRED) -->
+    <!-- ================================================================= -->
+    <div id="pure-text-container" class="space-y-6">
+
+      <!-- Language Direction Swap Bar -->
+      <div class="flex items-center justify-between max-w-4xl mx-auto bg-stone-900/80 p-3 rounded-2xl border border-stone-800 flex-wrap gap-3 shadow-lg">
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-stone-400 font-semibold uppercase">स्रोत भाषा:</span>
+          <span id="srcLangBadge" class="bg-amber-950 text-amber-300 border border-amber-600/50 px-3 py-1 rounded-lg text-sm font-bold">
+            🇮🇳 हिन्दी (Hindi)
+          </span>
+        </div>
+
+        <button id="swapDirectionBtn" onclick="toggleTranslationDirection()" class="btn btn-secondary text-xs flex items-center gap-2 border-emerald-500/40 hover:border-emerald-400 text-emerald-300" title="भाषा दिशा बदलें">
+          <span class="text-base">⇄</span>
+          <span>भाषा दिशा बदलें (Swap Direction)</span>
+        </button>
+
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-stone-400 font-semibold uppercase">लक्ष्य भाषा:</span>
+          <span id="tgtLangBadge" class="bg-emerald-950 text-emerald-300 border border-emerald-600/50 px-3 py-1 rounded-lg text-sm font-bold font-olchiki">
+            ᱥᱟᱱᱛᱟᱲᱤ (Santali Ol Chiki ᱚᱞ ᱪᱤᱠᱤ)
+          </span>
+        </div>
+      </div>
+
+      <!-- Poem / Story / Document Upload Box -->
+      <div class="card p-4 max-w-4xl mx-auto border-dashed border-2 border-stone-700 bg-stone-900/40 text-center">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="text-left">
+            <h4 class="font-bold text-stone-200 text-sm flex items-center gap-2">
+              <span>📄</span>
+              <span>कविता, कहानी या पाठ्य दस्तावेज़ अपलोड करें (Upload Poem / Story File)</span>
+            </h4>
+            <p class="text-xs text-stone-400">पाठ फ़ाइल (.txt, .md) चुनें या नीचे सीधे बहु-पंक्ति कविता/कहानी पेस्ट करें</p>
+          </div>
+          <div>
+            <label class="btn btn-primary text-xs cursor-pointer inline-flex items-center gap-2">
+              <span>📁 फ़ाइल चुनें (.txt, .md)</span>
+              <input type="file" id="poemFileInput" accept=".txt,.md,.text" class="hidden" onchange="handlePoemFileUpload(event)">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dual Side-by-Side Text Boards -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+
+        <!-- LEFT: Text / Poem Input Card -->
+        <div class="card p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-stone-800">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                <span id="inputBoxTitle" class="font-bold text-stone-200">मूल पाठ / कविता / कहानी (Input Text)</span>
+              </div>
+              <button onclick="clearPureTextInput()" class="text-xs text-stone-400 hover:text-amber-400 transition">
+                साफ़ करें (Clear)
+              </button>
+            </div>
+
+            <!-- Main Textarea for Sentences, Poems or Stories -->
+            <textarea 
+              id="pureTextInput" 
+              class="trans-textarea font-sans text-base leading-relaxed" 
+              placeholder="यहाँ हिन्दी या संताली में वाक्य, कविता या कहानी लिखें या पेस्ट करें..."
+              rows="8"
+            >बच्चों, आज हम पेड़-पौधों के बारे में पढ़ेंगे।
+पौधों को बढ़ने के लिए पानी और धूप की आवश्यकता होती है।</textarea>
+
+            <!-- Quick Poem / Starter Presets -->
+            <div class="mt-3">
+              <span class="text-[11px] text-stone-400 block mb-1.5">नमूना पाठ व कविताएँ (Sample Stories/Poems):</span>
+              <div class="flex flex-wrap gap-1.5">
+                <button onclick="loadSampleText('poem1')" class="text-xs bg-stone-800/80 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700 transition">📜 पेड़ की कविता</button>
+                <button onclick="loadSampleText('story1')" class="text-xs bg-stone-800/80 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700 transition">📖 गिनती की कहानी</button>
+                <button onclick="loadSampleText('santali1')" class="text-xs bg-stone-800/80 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700 transition font-olchiki">ᱚᱞ ᱪᱤᱠᱤ ᱥᱟᱱᱛᱟᱲᱤ</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-stone-800 flex items-center justify-between">
+            <span class="text-xs text-stone-500">Ctrl + Enter दबाकर अनुवाद करें</span>
+            <button onclick="executePureTextTranslation()" class="btn btn-primary px-5 py-2">
+              <span>✨ पाठ / कविता अनुवाद करें</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: Translated Text / Poem Output Card -->
+        <div class="card p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-stone-800">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span id="outputBoxTitle" class="font-bold text-stone-200">अनुवादित पाठ / कविता (Translated Output)</span>
+              </div>
+              <span id="textTranslateStatus" class="text-xs text-emerald-400 font-semibold hidden">✅ अनुवाद पूर्ण</span>
+            </div>
+
+            <!-- Translated Output Display Area -->
+            <div id="pureTextOutput" class="output-olchiki-box min-h-[220px] max-h-[350px] overflow-y-auto whitespace-pre-wrap font-olchiki text-emerald-300 text-lg leading-relaxed">
+              (यहाँ अनुवादित संताली या हिंदी पाठ दिखाई देगा...)
+            </div>
+
+            <!-- Optional Transliteration Sub-boxes (When translating to Santhali) -->
+            <div id="subScriptContainer" class="mt-3 space-y-2">
+              <div class="bg-stone-900/50 p-2.5 rounded-lg border border-stone-800 text-xs">
+                <span class="text-stone-400 font-semibold block mb-0.5">देवनागरी उच्चारण (Devanagari Sound):</span>
+                <span id="pureTextDevanagari" class="text-amber-200 font-medium"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons (Copy & Download Translated File) -->
+          <div class="pt-4 mt-4 border-t border-stone-800 flex flex-wrap items-center justify-between gap-2">
+            <button onclick="copyPureTextOutput()" class="btn btn-secondary text-xs flex items-center gap-1.5">
+              <span>📋 अनुवादित पाठ कॉपी करें</span>
+            </button>
+            <button onclick="downloadTranslatedFile()" class="btn btn-success text-xs flex items-center gap-1.5">
+              <span>💾 अनुवादित फ़ाइल डाउनलोड करें (.txt)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- MODE 2: VOICE TRANSLATOR (CLASSROOM MIC AUDIO MODE) -->
+    <!-- ================================================================= -->
+    <div id="voice-mode-container" class="hidden">
+      <!-- Top Action Controls & Auto-speak Toggle -->
+      <div class="flex items-center justify-between mb-4 max-w-4xl mx-auto bg-stone-900/60 p-2.5 rounded-xl border border-stone-800 flex-wrap gap-2">
+        <div class="flex items-center gap-2 text-xs text-stone-300">
+          <span>🎙️ वाक् भाषा: <strong class="text-emerald-400">हिन्दी (hi-IN) ➔ संताली (sat-IN ᱚᱞ ᱪᱤᱠᱤ)</strong></span>
+        </div>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center cursor-pointer select-none text-xs text-stone-300 gap-2">
+            <span>🔊 स्वतः बोलें (Auto-Speak)</span>
+            <input type="checkbox" id="autoSpeakToggle" class="sr-only peer" checked>
+            <div class="w-9 h-5 bg-stone-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
+          </label>
+          <button id="micHelpBtn" class="text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700 transition" title="Microphone help">
+            ❓ सहायता
+          </button>
+        </div>
+      </div>
+
+      <!-- Central Interactive Voice Control -->
+      <div class="mic-action-container mb-6">
+        <div class="relative flex items-center justify-center">
+          <button id="micBtn" class="mic-circle-btn" title="माइक दबाएँ और बोलें (Click to Speak in Hindi)">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <div id="listeningBadge" class="hidden mt-3 inline-flex items-center gap-2 bg-red-950/80 border border-red-500/50 text-red-300 text-xs px-3 py-1 rounded-full animate-pulse">
+          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+          <span>आवाज़ रिकॉर्ड हो रही है... (Listening to Hindi)</span>
+        </div>
+
+        <!-- Live Transcription Box -->
+        <div id="liveSpeechBox" class="hidden mt-2 max-w-md w-full bg-stone-900/80 border border-emerald-500/40 p-2.5 rounded-xl text-center">
+          <span class="text-[11px] text-emerald-400 font-semibold block">🎙️ आपकी हिंदी आवाज़:</span>
+          <span id="liveSpeechText" class="text-sm font-medium text-emerald-200">"बोलिए..."</span>
+        </div>
+
+        <!-- Stop & Translate button while recording -->
+        <button id="stopAndTranslateBtn" class="hidden mt-2 text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-1.5 rounded-full shadow-lg transition">
+          ✓ बोलना पूरा हुआ (Done & Translate)
+        </button>
+
+        <div id="micStatus" class="mt-2 text-xs font-medium text-stone-400 text-center max-w-md">
+          बोलने के लिए माइक दबाएँ (Click mic to speak in Hindi)
+        </div>
+
+        <!-- Live Waveform Canvas -->
+        <div class="w-full max-w-xs mt-2">
+          <canvas id="visualizerCanvas" class="visualizer-canvas"></canvas>
+        </div>
+      </div>
+
+      <!-- Dual Voice Board Output -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+        <!-- LEFT: Hindi Input Card -->
+        <div class="card p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-stone-800">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                <span class="font-bold text-stone-200">हिन्दी (Hindi Voice Input)</span>
+              </div>
+              <button id="clearBtn" class="text-xs text-stone-400 hover:text-amber-400 transition">साफ़ करें</button>
+            </div>
+            <textarea id="hindiInput" class="trans-textarea font-sans" rows="4" placeholder="यहाँ बोलें या लिखें...">खाना खा लिया</textarea>
+          </div>
+          <div class="pt-4 mt-4 border-t border-stone-800 flex items-center justify-between">
+            <button id="translateBtn" class="btn btn-primary w-full justify-center"><span>अनुवाद करें (Translate)</span></button>
+          </div>
+        </div>
+
+        <!-- RIGHT: Santhali Output Card -->
+        <div class="card p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-stone-800">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span class="font-bold text-stone-200">ᱥᱟᱱᱛᱟᱲᱤ (Santhali Output)</span>
+              </div>
+              <div id="voiceWaves" class="voice-waves-bar hidden">
+                <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
+              </div>
+            </div>
+            <div id="translatingLoader" class="hidden mb-3 text-xs bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 py-1 px-3 rounded-lg flex items-center gap-2 animate-pulse">
+              <span>⚡ अनुवाद हो रहा है...</span>
+            </div>
+            <div id="speechStatusBadge" class="hidden mb-3 text-xs bg-amber-950/80 border border-amber-500/50 text-amber-300 py-1 px-3 rounded-lg flex items-center gap-2">
+              <span>🔊 संथाली बोल रहा हूँ...</span>
+            </div>
+            <div id="emptyState" class="hidden py-8 text-center text-stone-500">
+              <p class="text-sm">यहाँ संथाली अनुवाद दिखाई देगा।</p>
+            </div>
+            <div id="resultContainer" class="space-y-3">
+              <div class="output-olchiki-box">
+                <div id="olChikiOutput" class="output-olchiki-text">ᱫᱟᱠᱟᱧ ᱡᱚᱢ ᱠᱮᱫᱟ ᱾</div>
+              </div>
+              <div class="bg-stone-900/50 p-3 rounded-lg border border-stone-800">
+                <div id="latinOutput" class="output-latin-text text-amber-100">Dakanj jom keda.</div>
+              </div>
+              <div class="bg-stone-900/50 p-3 rounded-lg border border-stone-800">
+                <div id="devanagariOutput" class="output-dev-text">दाकाञ जोम केदा।</div>
+              </div>
+              <div id="meaningOutput" class="text-xs text-stone-400 italic"></div>
+            </div>
+          </div>
+          <div class="pt-4 mt-4 border-t border-stone-800 flex flex-wrap items-center justify-between gap-2">
+            <button id="speakBtn" class="btn btn-success btn-speak"><span>बोलें (Speak)</span></button>
+            <button id="speakSlowBtn" class="btn btn-secondary text-xs"><span>🐢 धीमे</span></button>
+            <button id="copyOlChikiBtn" class="btn btn-secondary text-xs"><span>📋 Ol Chiki</span></button>
+            <button id="copyAllBtn" class="btn btn-secondary text-xs"><span>📋 सब कॉपी</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Daily Life Jharkhand Phrasebook -->
+    <section class="mb-12">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div>
+          <h3 class="text-xl font-bold text-stone-100 flex items-center gap-2">
+            <span>📖</span>
+            <span>दैनिक संथाली वार्तालाप (Daily Jharkhand Conversations)</span>
+          </h3>
+          <p class="text-xs text-stone-400">किसी भी वाक्य पर क्लिक करके पाठ अनुवाद देखें</p>
+        </div>
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
+          <button class="category-tab active" data-category="all">सभी</button>
+          <button class="category-tab" data-category="greetings">जोहार</button>
+          <button class="category-tab" data-category="travel">सफर</button>
+          <button class="category-tab" data-category="market">बाजार</button>
+          <button class="category-tab" data-category="food">खान-पान</button>
+          <button class="category-tab" data-category="help">मदद</button>
+        </div>
+      </div>
+      <div id="phraseList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    </section>
+
+    <!-- Section: Ol Chiki Alphabet Visual Guide (ᱚᱞ ᱪᱤᱠᱤ) -->
+    <section class="mb-12 card p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+        <div>
+          <h3 class="text-xl font-bold text-emerald-400 flex items-center gap-2 font-olchiki">
+            ᱚᱞ ᱪᱤᱠᱤ • ओल चिकी वर्णमाला (Santali Script Guide)
+          </h3>
+          <p class="text-xs text-stone-400">अक्षर पर क्लिक करके उसका सटीक उच्चारण देखें</p>
+        </div>
+      </div>
+      <div id="alphabetGrid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10 gap-2.5"></div>
+    </section>
+
+  </main>
+
+  <!-- Microphone Help Modal -->
+  <div id="micHelpModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div class="bg-stone-900 border border-emerald-500/40 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-stone-800 pb-3">
+        <h4 class="font-bold text-lg text-emerald-400 flex items-center gap-2"><span>🎙️</span><span>माइक सहायता</span></h4>
+        <button id="closeHelpBtn" class="text-stone-400 hover:text-white text-lg font-bold">&times;</button>
+      </div>
+      <p class="text-xs text-stone-300">Chrome/Edge में माइक अनुमति चालू करें।</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/static/translator_data.js"></script>
+  <script src="/static/app.js"></script>
+  <script>
+    let currentPureTextDirection = 'hi2sat'; // 'hi2sat' or 'sat2hi'
+
+    function switchTranslatorTab(mode) {
+      const textBtn = document.getElementById('tab-text-mode');
+      const voiceBtn = document.getElementById('tab-voice-mode');
+      const textContainer = document.getElementById('pure-text-container');
+      const voiceContainer = document.getElementById('voice-mode-container');
+
+      if (mode === 'text') {
+        textBtn.className = 'tab-btn active';
+        voiceBtn.className = 'tab-btn inactive';
+        textContainer.classList.remove('hidden');
+        voiceContainer.classList.add('hidden');
+      } else {
+        textBtn.className = 'tab-btn inactive';
+        voiceBtn.className = 'tab-btn active';
+        textContainer.classList.add('hidden');
+        voiceContainer.classList.remove('hidden');
+      }
+    }
+
+    function toggleTranslationDirection() {
+      const srcBadge = document.getElementById('srcLangBadge');
+      const tgtBadge = document.getElementById('tgtLangBadge');
+      const inputTitle = document.getElementById('inputBoxTitle');
+      const outputTitle = document.getElementById('outputBoxTitle');
+      const textInput = document.getElementById('pureTextInput');
+
+      if (currentPureTextDirection === 'hi2sat') {
+        currentPureTextDirection = 'sat2hi';
+        srcBadge.innerHTML = 'ᱥᱟᱱᱛᱟᱲᱤ (Santali Ol Chiki ᱚᱞ ᱪᱤᱠᱤ)';
+        srcBadge.className = 'bg-emerald-950 text-emerald-300 border border-emerald-600/50 px-3 py-1 rounded-lg text-sm font-bold font-olchiki';
+        
+        tgtBadge.innerHTML = '🇮🇳 हिन्दी (Hindi)';
+        tgtBadge.className = 'bg-amber-950 text-amber-300 border border-amber-600/50 px-3 py-1 rounded-lg text-sm font-bold';
+        
+        inputTitle.innerText = 'संथाली पाठ / कविता (Santhali Input Text)';
+        outputTitle.innerText = 'अनुवादित हिंदी पाठ (Hindi Output Text)';
+        textInput.placeholder = 'यहाँ संथाली ओल चिकी (ᱚᱞ ᱪᱤᱠᱤ) या रोमन संथाली पाठ लिखें...';
+        textInput.value = 'ᱫᱟᱨᱮ ᱠᱚ ᱦᱟᱨᱟᱜ ᱞᱟᱹᱜᱤᱫ ᱫᱟᱜ ᱟᱨ ᱥᱤᱛᱩᱝ ᱞᱟᱹᱠᱛᱤᱜᱼᱟ';
+      } else {
+        currentPureTextDirection = 'hi2sat';
+        srcBadge.innerHTML = '🇮🇳 हिन्दी (Hindi)';
+        srcBadge.className = 'bg-amber-950 text-amber-300 border border-amber-600/50 px-3 py-1 rounded-lg text-sm font-bold';
+        
+        tgtBadge.innerHTML = 'ᱥᱟᱱᱛᱟᱲᱤ (Santali Ol Chiki ᱚᱞ ᱪᱤᱠᱤ)';
+        tgtBadge.className = 'bg-emerald-950 text-emerald-300 border border-emerald-600/50 px-3 py-1 rounded-lg text-sm font-bold font-olchiki';
+        
+        inputTitle.innerText = 'मूल पाठ / कविता / कहानी (Input Text)';
+        outputTitle.innerText = 'अनुवादित संथाली पाठ (Santali Ol Chiki Output)';
+        textInput.placeholder = 'यहाँ हिन्दी में वाक्य, कविता या कहानी लिखें या पेस्ट करें...';
+        textInput.value = 'पौधों को बढ़ने के लिए पानी और धूप की आवश्यकता होती है।';
+      }
+      executePureTextTranslation();
+    }
+
+    function clearPureTextInput() {
+      document.getElementById('pureTextInput').value = '';
+      document.getElementById('pureTextOutput').innerText = '(अनुवादित पाठ यहाँ दिखाई देगा...)';
+      document.getElementById('pureTextDevanagari').innerText = '';
+    }
+
+    function loadSampleText(type) {
+      const textInput = document.getElementById('pureTextInput');
+      if (type === 'poem1') {
+        textInput.value = `छोटे-छोटे पौधे हमारे मित्र हैं।\nवे हमें साफ़ हवा और फल देते हैं।\nहमें रोज़ पानी देना चाहिए।`;
+      } else if (type === 'story1') {
+        textInput.value = `एक बार गाँव में तीन बच्चे रहते थे।\nवे रोज़ पाठशाला जाते थे और गिनती सीखते थे।\nवे एक से दस तक गिनती आसानी से बोलते थे।`;
+      } else if (type === 'santali1') {
+        textInput.value = `ᱫᱟᱨᱮ ᱠᱚ ᱦᱟᱨᱟᱜ ᱞᱟᱹᱜᱤᱫ ᱫᱟᱜ ᱟᱨ ᱥᱤᱛᱩᱝ ᱞᱟᱹᱠᱛᱤᱜᱼᱟ ᱾\nᱜᱤᱫᱽᱨᱟᱹ ᱠᱚ ᱛᱮᱦᱮᱧ ᱟᱵᱚ ᱞᱮᱠᱷᱟ ᱵᱚᱱ ᱥᱮᱸᱲᱟᱭᱟ ᱾`;
+        if (currentPureTextDirection === 'hi2sat') {
+          toggleTranslationDirection();
+          return;
+        }
+      }
+      executePureTextTranslation();
+    }
+
+    async function executePureTextTranslation() {
+      const text = document.getElementById('pureTextInput').value.trim();
+      const outputBox = document.getElementById('pureTextOutput');
+      const devBox = document.getElementById('pureTextDevanagari');
+      const statusBadge = document.getElementById('textTranslateStatus');
+
+      if (!text) {
+        outputBox.innerText = '(कृपया अनुवाद करने हेतु पाठ लिखें...)';
+        return;
+      }
+
+      outputBox.innerText = '⚡ अनुवाद जारी है...';
+      if (statusBadge) statusBadge.classList.add('hidden');
+
+      const srcLang = currentPureTextDirection === 'hi2sat' ? 'hi' : 'sat';
+      const tgtLang = currentPureTextDirection === 'hi2sat' ? 'sat' : 'hi';
+
+      try {
+        const res = await fetch('/api/v1/translate-document', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            text_content: text,
+            source_language: srcLang,
+            target_language: tgtLang
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          outputBox.innerText = data.translated_text || data.original_text;
+          if (statusBadge) statusBadge.classList.remove('hidden');
+          return;
+        }
+      } catch (e) {
+        console.warn('Translate document API fallback:', e);
+      }
+
+      // Fallback single line fetch
+      try {
+        const res = await fetch(`/api/translate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: text, source_language: srcLang, target_language: tgtLang })
+        });
+        const data = await res.json();
+        outputBox.innerText = data.translated_text || data.olChiki || data.hindi || text;
+        if (devBox) devBox.innerText = data.devanagari || '';
+        if (statusBadge) statusBadge.classList.remove('hidden');
+      } catch(e) {
+        outputBox.innerText = `[अनुवाद त्रुटि: ${e.message}]`;
+      }
+    }
+
+    function handlePoemFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('pureTextInput').value = evt.target.result;
+        executePureTextTranslation();
+      };
+      reader.readAsText(file);
+    }
+
+    function copyPureTextOutput() {
+      const outputText = document.getElementById('pureTextOutput').innerText;
+      if (!outputText || outputText.startsWith('(')) {
+        alert('कॉपी करने के लिए कोई अनुवादित पाठ उपलब्ध नहीं है।');
+        return;
+      }
+      navigator.clipboard.writeText(outputText).then(() => {
+        alert('📋 अनुवादित पाठ क्लिपबोर्ड पर कॉपी हो गया!');
+      });
+    }
+
+    function downloadTranslatedFile() {
+      const outputText = document.getElementById('pureTextOutput').innerText;
+      if (!outputText || outputText.startsWith('(')) {
+        alert('डाउनलोड करने के लिए कोई अनुवादित पाठ उपलब्ध नहीं है।');
+        return;
+      }
+
+      const blob = new Blob([outputText], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `translated_poem_story_${Date.now()}.txt`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    // Attach shortcut Ctrl+Enter to trigger translation
+    document.addEventListener('DOMContentLoaded', () => {
+      const inputArea = document.getElementById('pureTextInput');
+      if (inputArea) {
+        inputArea.addEventListener('keydown', (e) => {
+          if (e.ctrlKey && e.key === 'Enter') {
+            executePureTextTranslation();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

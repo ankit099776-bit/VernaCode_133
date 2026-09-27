@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — पाठ्यपुस्तक स्कैनर व अनुवादक</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/auth.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">📷</div>
+      <div>
+        <div style="font-weight: 800;">भाषासेतु पाठ्यपुस्तक स्कैनर</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">बहु-भाषी OCR एवं अनुवाद</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/teacher" class="nav-link">शिक्षक डैशबोर्ड</a></li>
+      <li><a href="/textbook" class="nav-link active">पाठ्यपुस्तक स्कैनर</a></li>
+      <li><a href="/translator" class="nav-link">अनुवादक</a></li>
+      <li><div class="status-badge"><span class="status-dot"></span> 🟢 ऑनलाइन</div></li>
+    </ul>
+  </nav>
+
+  <main class="container" style="max-width: 800px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800;">बहु-भाषी पाठ्यपुस्तक स्कैनर (Textbook OCR & Translator)</h1>
+        <p style="color: var(--text-muted);">हिंदी पाठ्यपुस्तक पृष्ठ की फ़ोटो लें ➔ पाठ निकालें ➔ संताली ओल चिकी (Ol Chiki ᱚᱞ ᱪᱤᱠᱤ) में अनुवाद करें</p>
+      </div>
+      <span class="tag-proto">OCR बहु-भाषी एकीकरण</span>
+    </div>
+
+    <!-- Scanner Box -->
+    <div class="card" style="padding: 2.5rem; text-align: center; border-style: dashed; border-width: 2px; margin-bottom: 1.5rem;">
+      <div style="font-size: 3.5rem; margin-bottom: 0.75rem;">📷</div>
+      <h3 style="margin-bottom: 0.5rem;">पाठ्यपुस्तक पृष्ठ की फ़ोटो खींचें या फ़ाइल अपलोड करें</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        कक्षा 2 NCERT / झारखण्ड राज्य बोर्ड हिंदी, गणित व पर्यावरण पाठ्यपुस्तकों का समर्थन करता है।
+      </p>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <label class="btn btn-primary" style="cursor: pointer;">
+          📁 फ़ाइल का चयन करें (Select Image File)
+          <input type="file" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+        </label>
+        <button class="btn btn-secondary" onclick="demoScan()">⚡ परीक्षण स्कैन चलाएँ (Run Demo Scan)</button>
+      </div>
+    </div>
+
+    <!-- Scan Result Output -->
+    <div class="card" style="padding: 2rem;">
+      <h3 style="margin-bottom: 1rem;">निकाला गया एवं अनुवादित पाठ (OCR Output)</h3>
+      <div id="ocr-output" style="background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 0.75rem; min-height: 160px; font-size: 1.05rem;">
+        OCR तथा अनुवाद चलाने हेतु ऊपर पाठ्यपुस्तक पृष्ठ अपलोड करें या "परीक्षण स्कैन" दबाएँ।
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function demoScan() {
+      document.getElementById('ocr-output').innerHTML = `
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">1. पाठ्यपुस्तक से निकाला गया हिंदी पाठ (OCR Extracted Text):</div>
+          <div style="font-size:1.1rem; color:#fff; font-weight:600; margin-top:0.2rem;">"पौधों को बढ़ने के लिए पानी और धूप की आवश्यकता होती है।"</div>
+        </div>
+        <div>
+          <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">2. संताली ओल चिकी अनुवाद (Santali Ol Chiki Translation):</div>
+          <div class="ol-chiki" style="font-size:1.3rem; color:#34d399; font-weight:700; margin-top:0.2rem;">"ᱫᱟᱨᱮ ᱠᱚ ᱦᱟᱨᱟᱜ ᱞᱟᱹᱜᱤᱫ ᱫᱟᱜ ᱟᱨ ᱥᱤᱛᱩᱝ ᱞᱟᱹᱠᱛᱤᱜᱼᱟ ᱾"</div>
+        </div>
+      `;
+    }
+
+    function handleImageUpload(e) {
+      if (e.target.files && e.target.files[0]) {
+        demoScan();
+      }
+    }
+  </script>
+</body>
+</html>

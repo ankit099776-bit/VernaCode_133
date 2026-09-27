@@ -1,0 +1,2 @@
+CRITICAL: Synthetic fallback data generated in Task 2 is labeled synthetic_fallback_DO_NOT_TRAIN.
+Do NOT use synthetic data for training.

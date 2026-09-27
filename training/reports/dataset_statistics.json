@@ -1,0 +1,32 @@
+{
+  "raw_pairs_count": 24030,
+  "script_validated_count": 24027,
+  "rejected_non_ol_chiki": 3,
+  "exact_duplicates_removed": 23956,
+  "conflicting_translations_count": 1,
+  "suspicious_pairs_count": 0,
+  "flores_overlaps_removed": 0,
+  "final_clean_pairs_count": 71,
+  "split_counts": {
+    "train": 46,
+    "validation": 15,
+    "test": 10
+  },
+  "train_source_distribution": {
+    "education": 16,
+    "agriculture": 7,
+    "coild": 23
+  },
+  "length_statistics": {
+    "hindi_char_len": {
+      "min": 8,
+      "max": 52,
+      "avg": 30.3
+    },
+    "santali_char_len": {
+      "min": 8,
+      "max": 51,
+      "avg": 33.21
+    }
+  }
+}

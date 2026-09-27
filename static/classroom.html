@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BhashaSetu AI — Live Classroom Launcher</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/auth.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">🌉</div>
+      <div>BhashaSetu Live Classroom</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="nav-link">Home</a></li>
+      <li><a href="/teacher" class="nav-link">Teacher</a></li>
+      <li><a href="/student" class="nav-link">Student</a></li>
+      <li><div class="status-badge"><span class="status-dot"></span> Online</div></li>
+    </ul>
+  </nav>
+
+  <main class="container" style="max-width: 700px; padding-top: 2rem;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h1 style="font-size: 2rem; font-weight: 800;">Real-Time Classroom Translation</h1>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-top: 0.4rem;">
+        Two-way Hindi ↔ Santali voice translation over local network (Session BHASA-204)
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <!-- Teacher Launcher Card -->
+      <div class="card" style="text-align: center; padding: 2rem; border-color: rgba(99, 102, 241, 0.4);">
+        <div style="font-size: 3rem; margin-bottom: 0.75rem;">👩‍🏫</div>
+        <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Teacher Device</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+          Broadcast Hindi speech to classroom & receive Santali audio responses from students.
+        </p>
+        <a href="/teacher/classroom" class="btn btn-primary" style="width: 100%;">Create / Start Classroom ➔</a>
+      </div>
+
+      <!-- Student Launcher Card -->
+      <div class="card" style="text-align: center; padding: 2rem; border-color: rgba(16, 185, 129, 0.4);">
+        <div style="font-size: 3rem; margin-bottom: 0.75rem;">👨‍🎓</div>
+        <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Student Device</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+          Listen to translated Santali Ol Chiki speech & speak back to Teacher in Santali.
+        </p>
+        <div style="margin-bottom: 1rem;">
+          <input type="text" id="room-input" value="BHASA-204" style="width: 100%; text-align: center; font-weight: 700; padding: 0.6rem; border-radius: 0.5rem; border: 1px solid var(--card-border); background: rgba(0,0,0,0.3); color: #34d399;">
+        </div>
+        <button onclick="joinStudentRoom()" class="btn btn-success" style="width: 100%;">Join Classroom Session ➔</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function joinStudentRoom() {
+      const room = document.getElementById('room-input').value || 'BHASA-204';
+      window.location.href = '/student/classroom?room=' + encodeURIComponent(room);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>भाषासेतु AI — संताली ओल चिकी फ्लैशकार्ड ( ᱯᱷᱞᱮᱥᱠᱟᱨᱰ )</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/auth.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .flashcard {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 2px solid var(--primary);
+      border-radius: 1.5rem;
+      padding: 3rem 2rem;
+      text-align: center;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      margin-bottom: 2rem;
+      cursor: pointer;
+      position: relative;
+    }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">🃏</div>
+      <div>
+        <div style="font-weight: 800;">भाषासेतु फ्लैशकार्ड ( ᱯᱷᱞᱮᱥᱠᱟᱨᱰ )</div>
+        <div style="font-size: 0.65rem; color: #34d399; font-weight: 600;">कक्षा 2 शब्दावली</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/student" class="nav-link">ᱚᱲᱟᱜ (Student Home)</a></li>
+      <li><a href="/teacher" class="nav-link">शिक्षक (Teacher)</a></li>
+      <li><a href="/flashcards" class="nav-link active">ᱯᱷᱞᱮᱥᱠᱟᱨᱰ (Flashcards)</a></li>
+      <li><a href="/quizzes" class="nav-link"><ctrl42>ᱠᱩᱠᱞᱤ (Quizzes)</a></li>
+      <li><div class="status-badge"><span class="status-dot"></span> 🟢 ऑनलाइन</div></li>
+    </ul>
+  </nav>
+
+  <main class="container" style="max-width: 800px;">
+    
+    <!-- Top Action Header for Teachers & Students -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800;">कक्षा 2 मातृभाषा शब्दावली ( ᱯᱷᱞᱮᱥᱠᱟᱨᱰ )</h1>
+        <p style="color: var(--text-muted);">संताली ओल चिकी (Ol Chiki ᱚᱞ ᱪᱤᱠᱤ) ↔ हिंदी इंटरैक्टिव फ्लैशकार्ड</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="openAddCardModal()">➕ नया फ्लैशकार्ड जोड़ें (Add Card)</button>
+        <button class="btn btn-secondary" onclick="toggleManageTable()">📋 प्रबंधित करें (Manage)</button>
+      </div>
+    </div>
+
+    <!-- Teacher Management Table (Hidden by Default) -->
+    <div id="manage-table-container" class="card" style="display: none; padding: 1.5rem; margin-bottom: 2rem;">
+      <h3 style="margin-bottom: 1rem; color: var(--secondary);">शिक्षक फ्लैशकार्ड प्रबंधन (Teacher Flashcards List)</h3>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-muted);">
+              <th style="padding: 0.5rem;">चित्र</th>
+              <th style="padding: 0.5rem;">हिंदी शब्द</th>
+              <th style="padding: 0.5rem;">संताली ओल चिकी</th>
+              <th style="padding: 0.5rem;">श्रेणी</th>
+              <th style="padding: 0.5rem; text-align: center;">कार्रवाई</th>
+            </tr>
+          </thead>
+          <tbody id="manage-tbody">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Category Filter Bar (Dynamic) -->
+    <div id="category-bar" style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.75rem; margin-bottom: 1.5rem;">
+      <!-- Generated dynamically -->
+    </div>
+
+    <!-- Main Flashcard Container -->
+    <div id="flashcard-box" class="flashcard">
+      <div id="fc-category" class="tag-proto" style="position: absolute; top: 1.5rem; left: 1.5rem;">जानवर</div>
+      <div id="fc-image" style="font-size: 5rem; margin-bottom: 1rem;">🐘</div>
+      <div id="fc-santali" class="ol-chiki" style="font-size: 2.5rem; font-weight: 700; color: #34d399; margin-bottom: 0.5rem;">ᱦᱟᱹᱛᱤ</div>
+      <div id="fc-hindi" style="font-size: 1.4rem; color: #fff; font-weight: 600; margin-bottom: 0.25rem;">हाथी</div>
+      <div id="fc-transliteration" style="font-size: 1rem; color: var(--text-muted);">Hati (Elephant)</div>
+    </div>
+
+    <!-- Controls -->
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <button class="btn btn-secondary btn-large" onclick="prevCard()">⬅ पिछला ( ᱛᱟᱭᱚᱢ )</button>
+      <button class="btn btn-success btn-large" onclick="playAudio()">🔊 उच्चारण सुनें ( ᱟᱸᱡᱚᱢ ᱢᱮ )</button>
+      <button class="btn btn-primary btn-large" onclick="nextCard()">अगला ➔ ( ᱞᱟᱦᱟ )</button>
+    </div>
+  </main>
+
+  <!-- Teacher Create Flashcard Modal -->
+  <div id="addCardModal" class="modal-overlay" style="display: none;">
+    <div class="card" style="max-width: 500px; width: 100%; padding: 2rem; border: 1px solid var(--secondary);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="font-size: 1.3rem; color: #fff;">➕ नया फ्लैशकार्ड जोड़ें (Teacher Flashcard Creator)</h3>
+        <button onclick="closeAddCardModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <form id="add-card-form" onsubmit="handleCreateCard(event)">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">हिंदी शब्द (Hindi Word) *</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="inp-hindi" placeholder="जैसे: मोर, सेब, पक्षी..." required style="flex: 1; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: #fff;">
+            <button type="button" class="btn btn-secondary" style="font-size: 0.8rem;" onclick="autoTranslateHindiInput()">⚡ ओल चिकी अनुवाद</button>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">संताली ओल चिकी (Santali Ol Chiki ᱚᱞ ᱪᱤᱠᱤ)</label>
+          <input type="text" id="inp-santali" placeholder="जैसे: ᱢᱟᱨᱟᱜ (खाली रहने पर स्वतः अनुवादित होगा)" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: #34d399; font-weight: 700;">
+        </div>
+
+        <div style="margin-bottom: 1rem; display: flex; gap: 0.75rem;">
+          <div style="flex: 1;">
+            <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">इमोजी / चित्र (Emoji)</label>
+            <input type="text" id="inp-image" value="🦚" required style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: #fff; text-align: center; font-size: 1.2rem;">
+          </div>
+          <div style="flex: 2;">
+            <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">श्रेणी (Category)</label>
+            <select id="inp-category" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: #fff;">
+              <option value="जानवर ( ᱡᱤᱣᱤᱭᱟᱹᱞᱤ )">जानवर ( ᱡᱤᱣᱤᱭᱟᱹᱞᱤ )</option>
+              <option value="पक्षी ( ᱪᱮᱬᱮ )">पक्षी ( ᱪᱮᱬᱮ )</option>
+              <option value="फल ( ᱡᱚ )">फल ( ᱡᱚ )</option>
+              <option value="संख्याएँ ( ᱞᱮᱠᱷᱟ )">संख्याएँ ( ᱞᱮᱠᱷᱟ )</option>
+              <option value="अभिवादन ( ᱡᱚᱦᱟᱨ )">अभिवादन ( ᱡᱚᱦᱟᱨ )</option>
+              <option value="सामान्य ( ᱥᱟᱫᱷᱟᱨᱚᱱ )">सामान्य ( ᱥᱟᱫᱷᱟᱨᱚᱱ )</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">विवरण / अर्थ (Description)</label>
+          <input type="text" id="inp-description" placeholder="जैसे: मोर - हमारा सुंदर राष्ट्रीय पक्षी" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); color: #fff;">
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary" onclick="closeAddCardModal()">रद्द करें</button>
+          <button type="submit" class="btn btn-primary">💾 फ्लैशकार्ड सहेजें (Save Flashcard)</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let allCards = [];
+    let filteredCards = [];
+    let currentIndex = 0;
+    let selectedCategory = 'All';
+
+    async function fetchCards() {
+      try {
+        const res = await fetch('/api/v1/flashcards');
+        allCards = await res.json();
+        renderCategories();
+        filterCategory(selectedCategory);
+        renderManageTable();
+      } catch(e) {
+        console.error('Flashcard fetch error:', e);
+      }
+    }
+
+    function renderCategories() {
+      const bar = document.getElementById('category-bar');
+      const categories = ['All', ...new Set(allCards.map(c => c.category))];
+      
+      bar.innerHTML = categories.map(cat => `
+        <button class="btn ${cat === selectedCategory ? 'btn-primary' : 'btn-secondary'}" onclick="filterCategory('${cat}')">
+          ${cat === 'All' ? 'सभी (All)' : cat}
+        </button>
+      `).join('');
+    }
+
+    function filterCategory(cat) {
+      selectedCategory = cat;
+      if (cat === 'All') {
+        filteredCards = [...allCards];
+      } else {
+        filteredCards = allCards.filter(c => c.category === cat);
+      }
+      currentIndex = 0;
+      renderCategories();
+      renderCard();
+    }
+
+    function renderCard() {
+      if (!filteredCards.length) {
+        document.getElementById('fc-category').innerText = 'कोई कार्ड नहीं';
+        document.getElementById('fc-image').innerText = '❓';
+        document.getElementById('fc-santali').innerText = '---';
+        document.getElementById('fc-hindi').innerText = 'इस श्रेणी में कोई कार्ड नहीं है।';
+        document.getElementById('fc-transliteration').innerText = '';
+        return;
+      }
+      const card = filteredCards[currentIndex];
+      document.getElementById('fc-category').innerText = card.category;
+      document.getElementById('fc-image').innerText = card.image || '🃏';
+      document.getElementById('fc-santali').innerText = card.santali || card.hindi;
+      document.getElementById('fc-hindi').innerText = card.hindi;
+      document.getElementById('fc-transliteration').innerText = `${card.transliteration || ''} (${card.description || ''})`;
+    }
+
+    function nextCard() {
+      if (!filteredCards.length) return;
+      currentIndex = (currentIndex + 1) % filteredCards.length;
+      renderCard();
+    }
+
+    function prevCard() {
+      if (!filteredCards.length) return;
+      currentIndex = (currentIndex - 1 + filteredCards.length) % filteredCards.length;
+      renderCard();
+    }
+
+    async function playAudio() {
+      if (!filteredCards.length) return;
+      const card = filteredCards[currentIndex];
+      const textToSpeak = card.santali || card.hindi;
+      try {
+        const res = await fetch('/api/v1/synthesize-speech', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: textToSpeak, target_language: 'sat' })
+        });
+        const data = await res.json();
+        if (data.audio_base64) {
+          const audio = new Audio('data:audio/wav;base64,' + data.audio_base64);
+          audio.play();
+        }
+      } catch(e) {
+        console.error('Audio synthesis error:', e);
+      }
+    }
+
+    function openAddCardModal() {
+      document.getElementById('addCardModal').style.display = 'flex';
+    }
+
+    function closeAddCardModal() {
+      document.getElementById('addCardModal').style.display = 'none';
+    }
+
+    function toggleManageTable() {
+      const table = document.getElementById('manage-table-container');
+      table.style.display = table.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function autoTranslateHindiInput() {
+      const hindiVal = document.getElementById('inp-hindi').value.trim();
+      if (!hindiVal) {
+        alert('कृपया अनुवाद करने हेतु हिंदी शब्द लिखें।');
+        return;
+      }
+      try {
+        const res = await fetch('/api/v1/translate-text', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: hindiVal, source_language: 'hi', target_language: 'sat' })
+        });
+        const data = await res.json();
+        if (data.ol_chiki || data.translated_text) {
+          document.getElementById('inp-santali').value = data.ol_chiki || data.translated_text;
+        }
+      } catch(e) {
+        console.error('Auto-translate error:', e);
+      }
+    }
+
+    async function handleCreateCard(e) {
+      e.preventDefault();
+      const hindi = document.getElementById('inp-hindi').value.trim();
+      const santali = document.getElementById('inp-santali').value.trim();
+      const image = document.getElementById('inp-image').value.trim() || '🃏';
+      const category = document.getElementById('inp-category').value;
+      const description = document.getElementById('inp-description').value.trim();
+
+      try {
+        const res = await fetch('/api/v1/flashcards', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            hindi: hindi,
+            santali: santali,
+            image: image,
+            category: category,
+            description: description
+          })
+        });
+
+        if (res.ok) {
+          closeAddCardModal();
+          document.getElementById('add-card-form').reset();
+          fetchCards();
+        } else {
+          alert('फ्लैशकार्ड सहेजने में विफल।');
+        }
+      } catch(err) {
+        alert('फ्लैशकार्ड सहेजते समय त्रुटि: ' + err.message);
+      }
+    }
+
+    function renderManageTable() {
+      const tbody = document.getElementById('manage-tbody');
+      tbody.innerHTML = allCards.map(c => `
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <td style="padding: 0.5rem; font-size: 1.4rem;">${c.image || '🃏'}</td>
+          <td style="padding: 0.5rem; font-weight: 600;">${c.hindi}</td>
+          <td style="padding: 0.5rem; color: #34d399; font-weight: 700;" class="ol-chiki">${c.santali}</td>
+          <td style="padding: 0.5rem; color: var(--text-muted);">${c.category}</td>
+          <td style="padding: 0.5rem; text-align: center;">
+            <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; color: #f87171;" onclick="deleteCard(${c.id})">🗑️ हटाएँ</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function deleteCard(cardId) {
+      if (!confirm('क्या आप वाकई इस फ्लैशकार्ड को हटाना चाहते हैं?')) return;
+      try {
+        const res = await fetch(`/api/v1/flashcards/${cardId}`, { method: 'DELETE' });
+        if (res.ok) {
+          fetchCards();
+        }
+      } catch(e) {
+        console.error('Delete flashcard error:', e);
+      }
+    }
+
+    window.onload = fetchCards;
+  </script>
+</body>
+</html>
