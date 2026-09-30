@@ -23,8 +23,6 @@
 ## 🌐 Live Web Application & Demonstration Links
 
 * 🌐 **Live Public Web App (Render)**: [https://vernacode-133.onrender.com](https://vernacode-133.onrender.com)
-* 🏫 **Teacher Portal**: [https://vernacode-133.onrender.com/teacher](https://vernacode-133.onrender.com/teacher)
-* 👦 **Student Learning Portal**: [https://vernacode-133.onrender.com/student](https://vernacode-133.onrender.com/student)
 * 💻 **GitHub Repository**: [https://github.com/ankit099776-bit/VernaCode_133](https://github.com/ankit099776-bit/VernaCode_133)
 
 ---
